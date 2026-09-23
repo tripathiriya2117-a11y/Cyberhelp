@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Frequently Asked Questions - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-secondary-subtle text-dark fw-bold mb-2">Helpdesk Knowledge</span>
+                <h1 class="fw-bold display-6 mb-2">Frequently Asked Cyber Safety Questions</h1>
+                <p class="text-secondary mb-0">
+                    Clear, expert answers to everyday security questions regarding online banking, biometric security, call spoofing, and account recovery.
+                </p>
+            </div>
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <form method="GET" action="{{ url_for('faqs') }}" class="input-group shadow-sm">
+                    <input type="text" name="q" class="form-control border-end-0" placeholder="Search FAQ topics..." value="{{ search_query }}">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container" style="max-width: 900px;">
+        {% if search_query %}
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="text-secondary">Showing FAQ results for: <strong>"{{ search_query }}"</strong></span>
+                <a href="{{ url_for('faqs') }}" class="btn btn-outline-secondary btn-sm rounded-pill">Clear Search</a>
+            </div>
+        {% endif %}
+
+        <div class="accordion accordion-flush cyber-card p-2" id="faqAccordion">
+            {% for f in faqs %}
+                <div class="accordion-item border-bottom py-2">
+                    <h2 class="accordion-header" id="heading{{ f['faq_id'] }}">
+                        <button class="accordion-button {% if not loop.first %}collapsed{% endif %} fw-bold text-dark fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ f['faq_id'] }}" aria-expanded="{% if loop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ f['faq_id'] }}">
+                            <i class="bi bi-patch-question-fill text-primary me-2"></i> {{ f['question'] }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ f['faq_id'] }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}" aria-labelledby="heading{{ f['faq_id'] }}" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-secondary lh-lg" style="white-space: pre-line;">
+                            {{ f['answer'] }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="card bg-primary-subtle border-0 rounded-4 p-4 mt-5 text-center">
+            <h5 class="fw-bold text-primary mb-2">Still have questions?</h5>
+            <p class="text-dark small mb-3">Our Gemini AI Cyber Safety Assistant is ready to help you analyze suspicious messages or guide you through security emergencies.</p>
+            <div>
+                <a href="{{ url_for('chatbot') }}" class="btn btn-primary rounded-pill px-4">
+                    <i class="bi bi-robot me-1"></i> Ask AI Cyber Assistant
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

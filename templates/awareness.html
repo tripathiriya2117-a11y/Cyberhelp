@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Awareness Hub - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-primary-subtle text-primary fw-bold mb-2">Educational Knowledge Base</span>
+                <h1 class="fw-bold display-6 mb-2">Cyber Safety Awareness Hub</h1>
+                <p class="text-secondary mb-0">
+                    Straightforward, jargon-free guides designed to help citizens understand and avoid common digital threats, deceptive social engineering tactics, and account hijackings.
+                </p>
+            </div>
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" id="liveSearchCards" class="form-control border-start-0 ps-0" placeholder="Filter articles by keyword..." value="{{ search_query }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <!-- Category Filter Pills -->
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            <a href="{{ url_for('awareness', category='all') }}" class="filter-btn {% if not selected_category or selected_category == 'all' %}active{% endif %} text-decoration-none">
+                All Topics ({{ articles|length }})
+            </a>
+            {% for cat in categories %}
+                <a href="{{ url_for('awareness', category=cat) }}" class="filter-btn {% if selected_category == cat %}active{% endif %} text-decoration-none">
+                    {{ cat }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- Articles Grid -->
+        <div class="row g-4" id="articlesGrid">
+            {% if articles %}
+                {% for article in articles %}
+                    <div class="col-md-6 col-lg-4 filterable-card" data-title="{{ article['title'] | lower }}" data-desc="{{ article['description'] | lower }}" data-category="{{ article['category'] | lower }}">
+                        <div class="cyber-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="card-category-tag">{{ article['category'] }}</span>
+                                <span class="text-muted small"><i class="bi bi-clock me-1"></i> 3 min read</span>
+                            </div>
+                            <h5 class="fw-bold text-dark mb-3">{{ article['title'] }}</h5>
+                            <p class="text-secondary small mb-4 flex-grow-1" style="white-space: pre-line;">
+                                {{ article['description'][:220] }}{% if article['description']|length > 220 %}...{% endif %}
+                            </p>
+                            <button class="btn btn-outline-primary btn-sm rounded-pill align-self-start" data-bs-toggle="modal" data-bs-target="#articleModal{{ article['content_id'] }}">
+                                <i class="bi bi-book-half me-1"></i> Read Full Guide
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Article Detail Modal -->
+                    <div class="modal fade" id="articleModal{{ article['content_id'] }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content border-0 shadow-lg rounded-4">
+                                <div class="modal-header border-bottom-0 pb-0">
+                                    <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">{{ article['category'] }}</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4 pt-3">
+                                    <h3 class="fw-bold text-dark mb-3">{{ article['title'] }}</h3>
+                                    <hr class="text-muted opacity-25">
+                                    <div class="article-content text-secondary lh-lg" style="white-space: pre-line; font-size: 1rem;">
+                                        {{ article['description'] }}
+                                    </div>
+                                    
+                                    <div class="alert alert-info d-flex align-items-center gap-2 mt-4 mb-0 small">
+                                        <i class="bi bi-shield-check fs-5"></i>
+                                        <div>
+                                            <strong>Safety Tip:</strong> Share this knowledge with elderly family members and students who are most targeted by these schemes.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-top-0 pt-0">
+                                    <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Close</button>
+                                    <a href="{{ url_for('chatbot') }}" class="btn btn-primary rounded-pill">Ask AI Questions on this Topic</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-search fs-1 text-muted"></i>
+                    <h5 class="mt-3 text-secondary">No awareness articles found matching your criteria.</h5>
+                    <a href="{{ url_for('awareness') }}" class="btn btn-primary btn-sm rounded-pill mt-2">Reset Filters</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

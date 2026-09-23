@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive Cyber Safety Quiz - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="max-w-700">
+            <span class="badge bg-warning-subtle text-dark fw-bold mb-2">Knowledge Assessment</span>
+            <h1 class="fw-bold display-6 mb-2">Interactive Cyber Safety Quiz</h1>
+            <p class="text-secondary mb-0">
+                Test your ability to spot real-world phishing scams, social engineering tricks, OTP traps, and malicious links. Get immediate score calculations and security feedback.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container" style="max-width: 860px;">
+        <!-- Quiz Result Card (Hidden until submission) -->
+        <div id="quizResultSection" class="quiz-card mb-5 d-none border-primary">
+            <div class="text-center pb-4 border-bottom mb-4">
+                <span class="badge bg-primary px-3 py-2 fs-6 rounded-pill mb-3">Quiz Completed</span>
+                <h2 class="display-6 fw-bold text-dark mb-1" id="quizScoreNumber">0 / {{ questions|length }}</h2>
+                <div class="fs-5 fw-bold text-primary mb-3" id="quizScorePercentage">0%</div>
+                
+                <div class="progress mx-auto mb-3" style="height: 12px; max-width: 400px;">
+                    <div id="quizScoreProgressBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                </div>
+
+                <p class="lead text-secondary mb-4" id="quizEvaluationText"></p>
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-outline-primary rounded-pill px-4" onclick="location.reload();">
+                        <i class="bi bi-arrow-repeat me-1"></i> Retake Quiz
+                    </button>
+                    <a href="{{ url_for('awareness') }}" class="btn btn-primary rounded-pill px-4">
+                        <i class="bi bi-book-half me-1"></i> Review Awareness Guides
+                    </a>
+                </div>
+            </div>
+
+            <h5 class="fw-bold text-dark mb-3">Detailed Question Breakdown</h5>
+            <div id="quizDetailedBreakdown"></div>
+        </div>
+
+        <!-- Quiz Form -->
+        <form id="cyberQuizForm">
+            {% for q in questions %}
+                <div class="quiz-card mb-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="badge bg-light text-secondary border fw-bold">Question {{ loop.index }} of {{ questions|length }}</span>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-4 lh-base">{{ q['question_text'] }}</h5>
+
+                    <div class="options-group">
+                        <input type="radio" class="btn-check quiz-option-input" name="q_{{ q['question_id'] }}" id="q{{ q['question_id'] }}_a" value="A" required>
+                        <label class="quiz-option-label" for="q{{ q['question_id'] }}_a">
+                            <span class="quiz-option-letter">A</span>
+                            <span>{{ q['option_a'] }}</span>
+                        </label>
+
+                        <input type="radio" class="btn-check quiz-option-input" name="q_{{ q['question_id'] }}" id="q{{ q['question_id'] }}_b" value="B">
+                        <label class="quiz-option-label" for="q{{ q['question_id'] }}_b">
+                            <span class="quiz-option-letter">B</span>
+                            <span>{{ q['option_b'] }}</span>
+                        </label>
+
+                        <input type="radio" class="btn-check quiz-option-input" name="q_{{ q['question_id'] }}" id="q{{ q['question_id'] }}_c" value="C">
+                        <label class="quiz-option-label" for="q{{ q['question_id'] }}_c">
+                            <span class="quiz-option-letter">C</span>
+                            <span>{{ q['option_c'] }}</span>
+                        </label>
+
+                        <input type="radio" class="btn-check quiz-option-input" name="q_{{ q['question_id'] }}" id="q{{ q['question_id'] }}_d" value="D">
+                        <label class="quiz-option-label" for="q{{ q['question_id'] }}_d">
+                            <span class="quiz-option-letter">D</span>
+                            <span>{{ q['option_d'] }}</span>
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="text-center py-3">
+                <button type="submit" id="submitQuizBtn" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow">
+                    <i class="bi bi-send-check me-2"></i> Submit &amp; Check Answers
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <span class="badge bg-dark text-white fw-bold mb-1">Administrative Control Center</span>
+                <h2 class="fw-bold text-dark mb-0">Helpdesk Content &amp; Intelligence Management</h2>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> View Live Site
+                </a>
+                <a href="{{ url_for('admin_logout') }}" class="btn btn-outline-danger btn-sm rounded-pill">
+                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Management Metric Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-sm-6 col-lg-4">
+                <div class="cyber-card border-start border-4 border-primary">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Awareness Guides</span>
+                        <div class="p-2 bg-primary-subtle text-primary rounded-3"><i class="bi bi-book-half"></i></div>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-3">{{ stats['awareness_count'] }}</h3>
+                    <a href="{{ url_for('admin_awareness') }}" class="btn btn-sm btn-outline-primary rounded-pill mt-auto">
+                        Manage Articles &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="cyber-card border-start border-4 border-danger">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Scam Database</span>
+                        <div class="p-2 bg-danger-subtle text-danger rounded-3"><i class="bi bi-shield-slash"></i></div>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-3">{{ stats['scams_count'] }}</h3>
+                    <a href="{{ url_for('admin_scams') }}" class="btn btn-sm btn-outline-danger rounded-pill mt-auto">
+                        Manage Scams &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="cyber-card border-start border-4 border-warning">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Quiz Bank</span>
+                        <div class="p-2 bg-warning-subtle text-warning rounded-3"><i class="bi bi-patch-question"></i></div>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-3">{{ stats['quiz_count'] }}</h3>
+                    <a href="{{ url_for('admin_quiz') }}" class="btn btn-sm btn-outline-warning rounded-pill mt-auto">
+                        Manage Questions &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="cyber-card border-start border-4 border-secondary">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Helpdesk FAQs</span>
+                        <div class="p-2 bg-secondary-subtle text-secondary rounded-3"><i class="bi bi-question-circle"></i></div>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-3">{{ stats['faq_count'] }}</h3>
+                    <a href="{{ url_for('admin_faqs') }}" class="btn btn-sm btn-outline-secondary rounded-pill mt-auto">
+                        Manage FAQs &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="cyber-card border-start border-4 border-info">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Reporting Guides</span>
+                        <div class="p-2 bg-info-subtle text-info rounded-3"><i class="bi bi-megaphone"></i></div>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-3">{{ stats['guidance_count'] }}</h3>
+                    <a href="{{ url_for('admin_reporting') }}" class="btn btn-sm btn-outline-info rounded-pill mt-auto">
+                        Manage Procedures &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="cyber-card border-start border-4 border-success">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted small fw-bold text-uppercase">Total Quiz Attempts</span>
+                        <div class="p-2 bg-success-subtle text-success rounded-3"><i class="bi bi-activity"></i></div>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-3">{{ stats['quiz_attempts'] }}</h3>
+                    <span class="text-muted small mt-auto"><i class="bi bi-graph-up text-success me-1"></i> Community Engagement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Quiz Attempts Table -->
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-header bg-white p-4 border-bottom d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-clock-history me-2 text-primary"></i> Recent Quiz Assessment Attempts</h5>
+                <span class="badge bg-light text-secondary border">Live Tracking</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table admin-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Session Identifier</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if recent_attempts %}
+                            {% for attempt in recent_attempts %}
+                                <tr>
+                                    <td>#{{ attempt['score_id'] }}</td>
+                                    <td><code class="text-muted">{{ attempt['session_id'][:16] }}...</code></td>
+                                    <td><span class="badge bg-primary">{{ attempt['score'] }} / {{ attempt['total_questions'] }}</span></td>
+                                    <td>
+                                        {% set pct = (attempt['score'] / attempt['total_questions'] * 100) | round(1) %}
+                                        <span class="fw-bold {% if pct >= 80 %}text-success{% elif pct >= 50 %}text-warning{% else %}text-danger{% endif %}">{{ pct }}%</span>
+                                    </td>
+                                    <td class="text-muted small">{{ attempt['attempt_date'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">No quiz attempts recorded yet. Users will appear here after taking the quiz.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

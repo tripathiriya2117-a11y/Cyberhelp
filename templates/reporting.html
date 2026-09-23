@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Official Cybercrime Reporting Guide - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="max-w-700">
+            <span class="badge bg-danger-subtle text-danger fw-bold mb-2">Emergency Response &amp; Legal Recourse</span>
+            <h1 class="fw-bold display-6 mb-2">Official Cybercrime Reporting Guide</h1>
+            <p class="text-secondary mb-0">
+                Official Indian law enforcement channels, national reporting portals, and tactical step-by-step procedures for reporting online financial fraud, identity theft, and extortion.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Emergency Helplines Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-danger text-white rounded-4 shadow-sm h-100">
+                    <span class="badge bg-white text-danger fw-bold mb-2">National Financial Helpline</span>
+                    <h2 class="display-6 fw-bold mb-1">1930</h2>
+                    <p class="small opacity-75 mb-3">Toll-free 24x7 emergency helpline to freeze fraudulent financial transactions during the Golden Hour.</p>
+                    <a href="tel:1930" class="btn btn-light text-danger fw-bold btn-sm rounded-pill px-3">Call 1930 Now</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-dark text-white rounded-4 shadow-sm h-100">
+                    <span class="badge bg-primary text-white fw-bold mb-2">Central Reporting Portal</span>
+                    <h4 class="fw-bold mb-1">cybercrime.gov.in</h4>
+                    <p class="small opacity-75 mb-3">Ministry of Home Affairs (MHA) portal for filing formal cyber complaints and downloading FIR PDFs.</p>
+                    <a href="https://cybercrime.gov.in" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">Visit Portal <i class="bi bi-box-arrow-up-right small ms-1"></i></a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-light border rounded-4 shadow-sm h-100">
+                    <span class="badge bg-warning text-dark fw-bold mb-2">Illegal Loan Apps</span>
+                    <h4 class="fw-bold text-dark mb-1">RBI Sachet</h4>
+                    <p class="small text-secondary mb-3">Reserve Bank of India portal for reporting unauthorized lending apps and harassment.</p>
+                    <a href="https://sachet.rbi.org.in" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill px-3">Open Sachet <i class="bi bi-box-arrow-up-right small ms-1"></i></a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-light border rounded-4 shadow-sm h-100">
+                    <span class="badge bg-info text-dark fw-bold mb-2">Spam / Phishing SMS</span>
+                    <h4 class="fw-bold text-dark mb-1">DoT Chakshu</h4>
+                    <p class="small text-secondary mb-3">Sanchar Saathi platform to report suspected fraud phone numbers, SMS, and WhatsApp communications.</p>
+                    <a href="https://sancharsaathi.gov.in" target="_blank" class="btn btn-outline-info text-dark btn-sm rounded-pill px-3">Report to Chakshu <i class="bi bi-box-arrow-up-right small ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step-by-Step Reporting Guides -->
+        <h3 class="fw-bold text-dark mb-4">Detailed Incident Response Guides</h3>
+        <div class="row g-4">
+            {% for guide in guidance_list %}
+                <div class="col-lg-6">
+                    <div class="cyber-card h-100">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="badge bg-primary-subtle text-primary">Procedure #{{ guide['guidance_id'] }}</span>
+                            {% if guide['official_link'] %}
+                                <a href="{{ guide['official_link'] }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill py-0 px-2 small">
+                                    Official Portal <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <h4 class="fw-bold text-dark mb-3">{{ guide['title'] }}</h4>
+                        <div class="text-secondary small mb-4 lh-lg flex-grow-1" style="white-space: pre-line;">
+                            {{ guide['steps'] }}
+                        </div>
+                        
+                        <div class="border-top pt-3 mt-auto d-flex justify-content-between align-items-center">
+                            <span class="text-muted small"><i class="bi bi-check2-circle text-success me-1"></i> Official Law Enforcement Procedure</span>
+                            {% if guide['official_link'] %}
+                                <a href="{{ guide['official_link'] }}" target="_blank" class="btn btn-primary btn-sm rounded-pill px-3">
+                                    Open Link &rarr;
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

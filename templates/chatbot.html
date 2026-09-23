@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}AI Cyber Safety Assistant - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <span class="badge bg-primary-subtle text-primary fw-bold mb-1">
+                    <i class="bi bi-robot me-1"></i> AI-Powered Digital Defense
+                </span>
+                <h2 class="fw-bold text-dark mb-0">AI Cyber Safety Assistant</h2>
+                <p class="text-secondary small mb-0">Ask questions about suspicious links, phishing SMS, UPI fraud, or emergency incident reporting.</p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#apiKeyModal">
+                    <i class="bi bi-key-fill text-warning me-1"></i> API Key Settings
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container" style="max-width: 950px;">
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="p-2 bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                        <i class="bi bi-shield-lock-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-dark mb-0">CyberHelp Incident Assistant</h6>
+                        <span class="text-success small d-flex align-items-center gap-1">
+                            <span class="badge bg-success rounded-circle p-1"></span> Active &amp; Ready
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <span class="badge bg-light text-muted border small">Gemini 2.0 / Local Fallback</span>
+                </div>
+            </div>
+
+            <!-- Chat message body -->
+            <div class="chat-body" id="chatBody">
+                <div class="chat-bubble bot">
+                    <div class="d-flex align-items-center justify-content-between mb-1 pb-1 border-bottom border-light">
+                        <span class="fw-bold small text-primary"><i class="bi bi-shield-lock-fill me-1"></i> CyberHelp Advisor</span>
+                        <span class="badge bg-light text-secondary border small" style="font-size: 0.68rem;">System</span>
+                    </div>
+                    <div class="chat-text-content">
+                        👋 Hello! I am your <strong>CyberHelp Safety Assistant</strong>.<br><br>
+                        You can paste suspicious SMS messages, ask if a job offer or loan app is safe, or get immediate guidance on reporting fraud to <strong>Helpline 1930</strong>.<br><br>
+                        <em>How can I help you protect yourself today?</em>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Starter Prompt Suggestions -->
+            <div class="px-3 pt-2 pb-1 bg-white border-top d-flex gap-2 flex-wrap overflow-x-auto">
+                <span class="small text-muted align-self-center me-1">Quick Prompts:</span>
+                <button type="button" class="btn btn-sm btn-light border rounded-pill prompt-chip small" data-prompt="What should I do immediately if money was fraudulently debited via UPI?">
+                    🚨 Debited via UPI
+                </button>
+                <button type="button" class="btn btn-sm btn-light border rounded-pill prompt-chip small" data-prompt="A buyer on OLX sent a QR code to receive payment. Is it safe?">
+                    📱 QR Code Payment
+                </button>
+                <button type="button" class="btn btn-sm btn-light border rounded-pill prompt-chip small" data-prompt="How do I lock my Aadhaar biometrics to prevent AePS fraud?">
+                    🔒 Lock Aadhaar
+                </button>
+                <button type="button" class="btn btn-sm btn-light border rounded-pill prompt-chip small" data-prompt="A fake loan app is threatening to morph my photos. What to do?">
+                    ⚠️ Fake Loan App Threat
+                </button>
+                <button type="button" class="btn btn-sm btn-light border rounded-pill prompt-chip small" data-prompt="What is Helpline 1930 and what is the Golden Hour?">
+                    📞 Helpline 1930
+                </button>
+            </div>
+
+            <!-- Chat Footer Input -->
+            <div class="chat-footer">
+                <div class="input-group">
+                    <input type="text" id="chatInput" class="form-control" placeholder="Ask a cyber safety question (e.g. 'Is this SMS a scam?')..." autocomplete="off">
+                    <button id="sendChatBtn" class="btn btn-primary px-4 fw-semibold" type="button">
+                        <i class="bi bi-send-fill me-1"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gemini API Key Modal -->
+<div class="modal fade" id="apiKeyModal" tabindex="-1" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="apiKeyModalLabel"><i class="bi bi-key-fill text-warning me-2"></i> Gemini API Key Configuration</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="small text-secondary mb-3">
+                    CyberHelp connects to Google's Gemini API for dynamic AI threat analysis. You can provide your free API key below (saved only in your browser) or set it in the <code>.env</code> file.
+                </p>
+                <div class="mb-3">
+                    <label for="customApiKey" class="form-label fw-semibold text-dark">Google Gemini API Key</label>
+                    <input type="password" class="form-control" id="customApiKey" placeholder="AIzaSy...">
+                    <div class="form-text small" id="apiKeyStatus">
+                        {% if has_env_key %}
+                            <span class="text-success"><i class="bi bi-check-circle-fill"></i> Server .env API key is active.</span>
+                        {% else %}
+                            <span class="text-muted">No server .env key detected. You can enter one here or use the built-in offline advisor.</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="alert alert-light border small text-muted mb-0">
+                    <i class="bi bi-info-circle text-primary me-1"></i> You can get a free Gemini API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="fw-semibold">Google AI Studio</a>.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" id="saveApiKeyBtn" data-bs-dismiss="modal">Save Key</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+{% endblock %}

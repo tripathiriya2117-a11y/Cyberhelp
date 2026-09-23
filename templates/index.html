@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}CyberHelp - Community Cyber Safety Helpdesk{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-wrapper">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <div class="hero-badge">
+                    <i class="bi bi-shield-check text-primary"></i> 100% Free Public Digital Defense Hub
+                </div>
+                <h1 class="display-5 fw-bold mb-3 text-dark">
+                    Stay Protected Against <span class="text-primary">Cyber Fraud & Online Scams</span>
+                </h1>
+                <p class="lead text-secondary mb-4">
+                    CyberHelp provides non-technical users, seniors, students, and small businesses with easy-to-understand awareness guides, scam detection tools, safety quizzes, and direct cybercrime reporting procedures.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('scam_library') }}" class="btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm">
+                        <i class="bi bi-search me-2"></i> Lookup Known Scams
+                    </a>
+                    <a href="{{ url_for('tools') }}" class="btn btn-outline-dark btn-lg rounded-pill px-4 fw-semibold">
+                        <i class="bi bi-tools me-2"></i> Test URL / Password
+                    </a>
+                    <a href="{{ url_for('chatbot') }}" class="btn btn-teal btn-outline-info btn-lg rounded-pill px-4 fw-semibold">
+                        <i class="bi bi-robot me-2"></i> AI Assistant
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-dark text-white p-3 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-bell-fill text-warning"></i>
+                            <span class="fw-bold small text-uppercase letter-spacing-1">Emergency Action Center</span>
+                        </div>
+                        <span class="badge bg-danger text-white">Helpline 1930</span>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <h5 class="fw-bold text-dark mb-2">Lost money in an online transaction?</h5>
+                        <p class="small text-muted mb-3">
+                            The first <strong>1–2 hours</strong> are the "Golden Hour". Fast reporting allows banks to freeze funds in the fraudster's account.
+                        </p>
+                        <div class="p-3 bg-light rounded-3 mb-3 border">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <span class="fw-bold text-dark">National Cyber Helpline</span>
+                                <span class="badge bg-success">Toll Free 24x7</span>
+                            </div>
+                            <h3 class="fw-bold text-primary mb-0"><i class="bi bi-telephone-outbound-fill me-2"></i>1930</h3>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('reporting') }}" class="btn btn-outline-danger fw-semibold rounded-pill">
+                                <i class="bi bi-file-earmark-medical me-2"></i> Step-by-Step Reporting Guide
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Community Safety Metrics -->
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="p-3">
+                    <h2 class="fw-bold text-primary mb-1">{{ articles_count }}</h2>
+                    <span class="text-secondary small fw-medium">Educational Guides</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="p-3">
+                    <h2 class="fw-bold text-danger mb-1">{{ scams_count }}</h2>
+                    <span class="text-secondary small fw-medium">Scam Patterns Documented</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="p-3">
+                    <h2 class="fw-bold text-success mb-1">{{ quiz_count }}</h2>
+                    <span class="text-secondary small fw-medium">Safety Quiz Questions</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="p-3">
+                    <h2 class="fw-bold text-info mb-1">{{ scores_count }}</h2>
+                    <span class="text-secondary small fw-medium">Community Quiz Attempts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Highlights -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <h6 class="text-primary fw-bold text-uppercase letter-spacing-1">Helpdesk Modules</h6>
+            <h2 class="fw-bold text-dark">Everything You Need To Stay Safe Online</h2>
+            <p class="text-secondary">Explore our curated toolset designed to identify frauds, verify links, and strengthen your cyber defense.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Awareness Hub Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="cyber-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+                            <i class="bi bi-journal-bookmark-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Awareness Hub</h5>
+                    </div>
+                    <p class="text-secondary small flex-grow-1">
+                        Comprehensive, plain-English guides explaining Phishing, OTP thefts, QR scams, SIM swap attacks, and Aadhaar biometric security.
+                    </p>
+                    <a href="{{ url_for('awareness') }}" class="btn btn-sm btn-outline-primary rounded-pill mt-3">
+                        Browse Guides <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scam Library Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="cyber-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 bg-danger-subtle text-danger rounded-3 fs-4">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Scam Information Library</h5>
+                    </div>
+                    <p class="text-secondary small flex-grow-1">
+                        Searchable repository of active fraud schemes: Fake loan apps, Part-time Telegram jobs, Electricity bill SMS, and Courier drug scams.
+                    </p>
+                    <a href="{{ url_for('scam_library') }}" class="btn btn-sm btn-outline-danger rounded-pill mt-3">
+                        Explore Scam Database <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Lightweight Tools Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="cyber-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 bg-success-subtle text-success rounded-3 fs-4">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Safety Validation Tools</h5>
+                    </div>
+                    <p class="text-secondary small flex-grow-1">
+                        Test password entropy &amp; crack resistance with our client-side checker, and scan suspicious web links for phishing heuristics.
+                    </p>
+                    <a href="{{ url_for('tools') }}" class="btn btn-sm btn-outline-success rounded-pill mt-3">
+                        Launch Tools <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Quiz Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="cyber-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 bg-warning-subtle text-warning rounded-3 fs-4">
+                            <i class="bi bi-patch-question-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Interactive Safety Quiz</h5>
+                    </div>
+                    <p class="text-secondary small flex-grow-1">
+                        Test your cyber awareness against 10 real-world scenario questions with instant score analysis and actionable explanations.
+                    </p>
+                    <a href="{{ url_for('quiz') }}" class="btn btn-sm btn-outline-warning rounded-pill mt-3">
+                        Take Safety Quiz <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cybercrime Reporting Guide Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="cyber-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 bg-info-subtle text-info rounded-3 fs-4">
+                            <i class="bi bi-megaphone-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Reporting Channels</h5>
+                    </div>
+                    <p class="text-secondary small flex-grow-1">
+                        Clear instructions for filing complaints on the National Cyber Crime Reporting Portal (cybercrime.gov.in) and evidence checklists.
+                    </p>
+                    <a href="{{ url_for('reporting') }}" class="btn btn-sm btn-outline-info rounded-pill mt-3">
+                        View Reporting Steps <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AI Chatbot Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="cyber-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+                            <i class="bi bi-chat-heart-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Gemini AI Safety Bot</h5>
+                    </div>
+                    <p class="text-secondary small flex-grow-1">
+                        Instant answers for threat questions, suspicious message analysis, and incident support powered by Google Gemini API.
+                    </p>
+                    <a href="{{ url_for('chatbot') }}" class="btn btn-sm btn-outline-primary rounded-pill mt-3">
+                        Chat with Assistant <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Scams Spotlight -->
+<section class="py-5 bg-light border-top">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div>
+                <h6 class="text-danger fw-bold text-uppercase letter-spacing-1">Scam Alert</h6>
+                <h3 class="fw-bold text-dark mb-0">Recent Scam Patterns in Circulation</h3>
+            </div>
+            <a href="{{ url_for('scam_library') }}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                View All Scams <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for scam in recent_scams %}
+                <div class="col-md-6">
+                    <div class="cyber-card">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="card-category-tag">{{ scam['category'] }}</span>
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle small">High Risk</span>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">{{ scam['title'] }}</h5>
+                        <p class="text-secondary small mb-3">
+                            {{ scam['description'][:200] }}...
+                        </p>
+                        <a href="{{ url_for('scam_library') }}?q={{ scam['title'] | urlencode }}" class="btn btn-link text-primary p-0 text-start text-decoration-none fw-semibold small">
+                            Read Full Modus Operandi &amp; Prevention &rarr;
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

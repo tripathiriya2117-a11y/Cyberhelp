@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}Safety Validation Tools - CyberHelp{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white border-bottom">
+    <div class="container">
+        <div class="max-w-700">
+            <span class="badge bg-success-subtle text-success fw-bold mb-2">Interactive Validation Suite</span>
+            <h1 class="fw-bold display-6 mb-2">Client-Side Cyber Safety Tools</h1>
+            <p class="text-secondary mb-0">
+                Lightweight, private utilities to verify password robustness and analyze suspicious web links for phishing heuristics. All password computations are processed locally inside your web browser.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Tool 1: Password Strength & Entropy Analyzer -->
+            <div class="col-lg-6">
+                <div class="tool-container h-100">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+                            <i class="bi bi-key-fill"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold text-dark mb-0">Password Strength &amp; Entropy Meter</h4>
+                            <span class="text-muted small">Pure client-side cryptographic analysis</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pwdInput" class="form-label fw-semibold text-dark">Enter or Test Password</label>
+                        <div class="input-group">
+                            <input type="password" id="pwdInput" class="form-control form-control-lg font-monospace" placeholder="Type a password to test..." autocomplete="off">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePwdVisibility">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Visual Strength Meter -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small text-secondary fw-semibold">Security Rating:</span>
+                            <span id="strengthLabel" class="fw-bold text-muted small">Enter a password</span>
+                        </div>
+                        <div class="strength-meter-bar">
+                            <div id="strengthBar" class="strength-meter-progress" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded-3 border text-center">
+                                <span class="text-secondary small d-block mb-1">Shannon Entropy</span>
+                                <h5 id="entropyValue" class="fw-bold text-primary mb-0 font-monospace">0 bits</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded-3 border text-center">
+                                <span class="text-secondary small d-block mb-1">Estimated Crack Time</span>
+                                <h5 id="crackTimeValue" class="fw-bold text-dark mb-0 font-monospace">Instant</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warning for dictionary words -->
+                    <div id="patternWarning" class="alert alert-warning py-2 px-3 small d-none mb-3"></div>
+
+                    <!-- Checklist -->
+                    <h6 class="fw-bold text-dark mb-2 small text-uppercase letter-spacing-1">Strength Checklist</h6>
+                    <div class="row g-1">
+                        <div class="col-sm-6">
+                            <div id="reqLength" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                                <i class="bi bi-circle"></i> Minimum 12 characters
+                            </div>
+                            <div id="reqUpper" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                                <i class="bi bi-circle"></i> Uppercase letters (A-Z)
+                            </div>
+                            <div id="reqLower" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                                <i class="bi bi-circle"></i> Lowercase letters (a-z)
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div id="reqNumber" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                                <i class="bi bi-circle"></i> Numbers (0-9)
+                            </div>
+                            <div id="reqSpecial" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                                <i class="bi bi-circle"></i> Special characters (!@#$%...)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-light border small text-muted mt-4 mb-0">
+                        <i class="bi bi-lock-fill text-success me-1"></i> <strong>Privacy Guarantee:</strong> Passwords are never sent to any server. All calculations execute locally on your machine.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool 2: URL Safety & Heuristic Link Scanner -->
+            <div class="col-lg-6">
+                <div class="tool-container h-100">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="p-2 bg-danger-subtle text-danger rounded-3 fs-4">
+                            <i class="bi bi-link-45deg"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold text-dark mb-0">URL Safety &amp; Phishing Scanner</h4>
+                            <span class="text-muted small">Heuristic inspection for spoofed domains &amp; dangerous links</span>
+                        </div>
+                    </div>
+
+                    <form id="urlCheckerForm" class="mb-3">
+                        <div class="mb-3">
+                            <label for="urlInput" class="form-label fw-semibold text-dark">Enter Web Link to Inspect</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-globe"></i></span>
+                                <input type="text" id="urlInput" class="form-control form-control-lg font-monospace fs-6" placeholder="e.g. http://192.168.1.1/login or bit.ly/3xYz" required>
+                            </div>
+                        </div>
+
+                        <!-- Sample Test Buttons -->
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="small text-muted align-self-center me-1">Try samples:</span>
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" onclick="document.getElementById('urlInput').value='http://192.168.1.55/sbi-kyc-update.php'">Sample IP Link</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" onclick="document.getElementById('urlInput').value='http://secure-sbi-online.update-login.xyz/portal'">Sample Spoofed Phishing</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" onclick="document.getElementById('urlInput').value='https://cybercrime.gov.in'">Sample Safe Official Portal</button>
+                        </div>
+
+                        <button type="submit" id="analyzeUrlBtn" class="btn btn-primary btn-lg w-100 rounded-pill fw-semibold">
+                            <i class="bi bi-shield-check me-1"></i> Analyze URL
+                        </button>
+                    </form>
+
+                    <!-- Scan Results Card -->
+                    <div id="urlResultBox" class="url-result-box bg-light d-none">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span id="urlVerdictBadge" class="badge bg-secondary px-3 py-2 fs-6">ANALYZING</span>
+                            </div>
+                            <div class="text-end">
+                                <span class="small text-muted d-block">Risk Score</span>
+                                <span id="urlRiskScoreText" class="fw-bold text-dark font-monospace">0/100</span>
+                            </div>
+                        </div>
+
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div id="urlRiskBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                        </div>
+
+                        <h6 id="urlVerdictTitle" class="fw-bold text-dark mb-1">Target Domain:</h6>
+                        <div id="urlHostDisplay" class="font-monospace small text-muted text-break mb-3"></div>
+
+                        <div class="card p-3 bg-white border mb-3">
+                            <h6 class="fw-bold text-dark small text-uppercase letter-spacing-1 mb-1">Recommendation</h6>
+                            <p id="urlRecommendation" class="small text-secondary mb-0"></p>
+                        </div>
+
+                        <h6 class="fw-bold text-dark small text-uppercase letter-spacing-1 mb-2">Detected Threat Signals</h6>
+                        <div id="urlFlagsList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/password_tool.js') }}"></script>
+<script src="{{ url_for('static', filename='js/url_checker.js') }}"></script>
+{% endblock %}
