@@ -48,6 +48,7 @@
                                         <i class="bi bi-pencil"></i>
                                     </button>
                                     <form method="POST" action="{{ url_for('admin_faqs') }}" class="d-inline" onsubmit="return confirm('Delete this FAQ entry?');">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="faq_id" value="{{ f['faq_id'] }}">
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
@@ -62,6 +63,7 @@
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content border-0 shadow rounded-4">
                                         <form method="POST" action="{{ url_for('admin_faqs') }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="edit">
                                             <input type="hidden" name="faq_id" value="{{ f['faq_id'] }}">
                                             <div class="modal-header">
@@ -99,6 +101,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow rounded-4">
             <form method="POST" action="{{ url_for('admin_faqs') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="action" value="create">
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold"><i class="bi bi-plus-circle text-secondary me-2"></i> Create New FAQ</h5>

@@ -11,16 +11,72 @@ from flask import (
 from werkzeug.security import check_password_hash, generate_password_hash
 from dotenv import load_dotenv
 from db import get_db, seed_db
+from flask_wtf.csrf import CSRFProtect
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'cyberhelp-community-safety-secure-secret-key-2026')
+
+# Detect test mode BEFORE configuring database
+IS_TESTING = os.environ.get('FLASK_ENV') == 'testing' or os.environ.get('PYTEST_CURRENT_TEST') is not None
+
+# SECRET_KEY must be set via environment variable
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY is not configured. Set SECRET_KEY in .env")
+app.secret_key = SECRET_KEY
+
+# Session cookie security
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+# Secure cookies only in production (HTTPS)
+if os.environ.get('FLASK_ENV') == 'production':
+    app.config['SESSION_COOKIE_SECURE'] = True
+
+# CSRF Protection
+csrf = CSRFProtect(app)
+
+# Rate Limiter - only for login endpoint
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    default_limits=[],
+    storage_uri="memory://",
+)
+
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 
-# Ensure database is initialized on startup
-with app.app_context():
-    seed_db()
+# Debug mode - disabled by default
+DEBUG = os.environ.get('FLASK_DEBUG', '0') == '1'
+
+# Admin credentials from environment
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+
+# Ensure database is initialized on startup (skip in testing - tests handle their own DB)
+if not IS_TESTING:
+    with app.app_context():
+        seed_db()
+
+@app.after_request
+def add_security_headers(response):
+    """Add security headers to all responses."""
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    # CSP allowing CDN resources used by the app
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; "
+        "script-src 'self' https://cdn.jsdelivr.net; "
+        "style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; "
+        "img-src 'self' data:; "
+        "connect-src 'self' https://generativelanguage.googleapis.com; "
+        "frame-ancestors 'self';"
+    )
+    return response
 
 @app.before_request
 def before_request():
@@ -159,6 +215,7 @@ def chatbot():
 
 # ----------------- APIs (Tools, Quiz, Chatbot) -----------------
 
+@csrf.exempt
 @app.route('/api/check-url', methods=['POST'])
 def api_check_url():
     data = request.get_json(silent=True) or {}
@@ -294,6 +351,7 @@ def api_check_url():
         'flags': flags
     })
 
+@csrf.exempt
 @app.route('/api/quiz/submit', methods=['POST'])
 def api_quiz_submit():
     data = request.get_json(silent=True) or {}
@@ -359,17 +417,17 @@ def api_quiz_submit():
         'results': detailed_results
     })
 
+@csrf.exempt
 @app.route('/api/chat', methods=['POST'])
 def api_chat():
     data = request.get_json(silent=True) or {}
     message = data.get('message', '').strip()
-    client_api_key = data.get('apiKey', '').strip()
     
     if not message:
         return jsonify({'error': 'Message cannot be empty.'}), 400
         
-    # Use client-supplied key or .env key
-    api_key = client_api_key or os.environ.get('GEMINI_API_KEY', '').strip()
+    # Use server-side Gemini API key only
+    api_key = os.environ.get('GEMINI_API_KEY', '').strip()
     
     # If API key is available, call Gemini API
     if api_key:
@@ -415,13 +473,10 @@ def api_chat():
                                 'source': 'Gemini 2.0 Flash AI'
                             })
                 elif resp.status_code == 400 or resp.status_code == 403:
-                    # Invalid key or permission error
-                    err_msg = resp.json().get('error', {}).get('message', 'Invalid API key')
-                    return jsonify({
-                        'error': f'Gemini API error: {err_msg}. Check your API key or use the built-in offline advisor.'
-                    }), 400
-            except Exception as e:
-                pass # Try next endpoint or fallback
+                    # Invalid key or permission error - fall back to offline engine
+                    break
+            except Exception:
+                pass  # Try next endpoint or fallback
 
     # Intelligent Local Fallback Response Engine
     msg_lower = message.lower()
@@ -493,7 +548,15 @@ def get_contextual_fallback_response(query):
 
 # ----------------- Module 2: Admin Panel & CRUD -----------------
 
+def check_admin_credentials(username, password):
+    """Verify admin credentials against database."""
+    admin = g.db.execute("SELECT * FROM admin WHERE username = ?", (username,)).fetchone()
+    if admin and check_password_hash(admin['password_hash'], password):
+        return admin
+    return None
+
 @app.route('/admin/login', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
 def admin_login():
     if 'admin_id' in session:
         return redirect(url_for('admin_dashboard'))
@@ -502,15 +565,15 @@ def admin_login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '').strip()
         
-        admin = g.db.execute("SELECT * FROM admin WHERE username = ?", (username,)).fetchone()
+        admin = check_admin_credentials(username, password)
         
-        if admin and check_password_hash(admin['password_hash'], password):
+        if admin:
             session['admin_id'] = admin['admin_id']
             session['admin_username'] = admin['username']
             flash(f'Welcome back, {admin["username"]}! Logged in successfully.', 'success')
             return redirect(url_for('admin_dashboard'))
         else:
-            flash('Invalid username or password. Default is admin / admin123.', 'danger')
+            flash('Invalid username or password.', 'danger')
             
     return render_template('admin/login.html')
 
@@ -763,4 +826,4 @@ def admin_reporting():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     print(f"Starting CyberHelp Helpdesk on http://127.0.0.1:{port}")
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=DEBUG)

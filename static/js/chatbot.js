@@ -6,32 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBody = document.getElementById('chatBody');
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendChatBtn');
-    const apiKeyInput = document.getElementById('customApiKey');
-    const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
-    const apiKeyStatus = document.getElementById('apiKeyStatus');
     const promptChips = document.querySelectorAll('.prompt-chip');
 
     if (!chatBody || !chatInput) return;
-
-    // Load saved API key from localStorage if present
-    const savedKey = localStorage.getItem('cyberhelp_gemini_key') || '';
-    if (apiKeyInput && savedKey) {
-        apiKeyInput.value = savedKey;
-        if (apiKeyStatus) apiKeyStatus.textContent = 'Custom Gemini API Key is active in your browser.';
-    }
-
-    if (saveApiKeyBtn && apiKeyInput) {
-        saveApiKeyBtn.addEventListener('click', () => {
-            const key = apiKeyInput.value.trim();
-            if (key) {
-                localStorage.setItem('cyberhelp_gemini_key', key);
-                alert('Gemini API key saved in browser storage!');
-            } else {
-                localStorage.removeItem('cyberhelp_gemini_key');
-                alert('Custom key cleared. CyberHelp will use server environment key or offline knowledge base.');
-            }
-        });
-    }
 
     // Quick prompt chip click
     promptChips.forEach(chip => {
@@ -62,15 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const typingId = appendTypingIndicator();
         chatBody.scrollTop = chatBody.scrollHeight;
 
-        const userKey = localStorage.getItem('cyberhelp_gemini_key') || '';
-
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    message: message,
-                    apiKey: userKey
+                    message: message
                 })
             });
 
@@ -92,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function appendMessage(role, text, source) {
         const bubble = document.createElement('div');
-        bubble.className = `chat-bubble ${role}`;
+        bubble.className = 'chat-bubble ' + role;
 
         let formattedText = formatMarkdown(text);
         
@@ -100,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bubble.innerHTML = `
                 <div class="d-flex align-items-center justify-content-between mb-1 pb-1 border-bottom border-light">
                     <span class="fw-bold small text-primary"><i class="bi bi-shield-lock-fill me-1"></i> CyberHelp Advisor</span>
-                    ${source ? `<span class="badge bg-light text-secondary border small" style="font-size: 0.68rem;">${source}</span>` : ''}
+                    ${source ? '<span class="badge bg-light text-secondary border small" style="font-size: 0.68rem;">${source}</span>' : ''}
                 </div>
                 <div class="chat-text-content">${formattedText}</div>
             `;
@@ -132,9 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (el) el.remove();
     }
 
-    function formatMarkdown(md) {
+            function formatMarkdown(md) {
         if (!md) return '';
-        // Escape HTML
+        // Escape HTML - use proper HTML entities
         let escaped = md
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -145,9 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Italic
         escaped = escaped.replace(/\*(.*?)\*/g, '<em>$1</em>');
         // Markdown Links
-        escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" class="text-primary fw-semibold">$1 <i class="bi bi-box-arrow-up-right small"></i></a>');
+        escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" class="text-primary fw-semibold">$1 <i class="bi bi-box-arrow-up-right small"></i></a>');
         // New lines to br
-        escaped = escaped.replace(/\n/g, '<br>');
+        escaped = escaped.replace(/
+/g, '<br>');
         return escaped;
     }
 });

@@ -2,9 +2,14 @@ import os
 import sqlite3
 from werkzeug.security import generate_password_hash
 
-DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cyberhelp.db')
+# Database path can be overridden via environment variable (e.g., for tests)
+DATABASE_PATH = os.environ.get('DATABASE_PATH') or os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cyberhelp.db')
 SCHEMA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
 SEED_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seed.sql')
+
+# Admin credentials from environment
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
 
 def get_db():
     """
@@ -36,30 +41,40 @@ def seed_db():
     conn = get_db()
     cursor = conn.cursor()
 
-    # Check if admin exists; if not, create default admin with standard password hash
-    cursor.execute("SELECT admin_id FROM admin WHERE username = ?", ('admin',))
+    # Check if admin exists; if not, create admin with password from environment
+    cursor.execute("SELECT admin_id FROM admin WHERE username = ?", (ADMIN_USERNAME,))
     admin_row = cursor.fetchone()
     if not admin_row:
-        admin_hash = generate_password_hash('admin123')
+        if not ADMIN_PASSWORD:
+            raise RuntimeError("ADMIN_PASSWORD is not configured. Set ADMIN_PASSWORD in .env")
+        admin_hash = generate_password_hash(ADMIN_PASSWORD)
         cursor.execute(
             "INSERT INTO admin (username, password_hash) VALUES (?, ?)",
-            ('admin', admin_hash)
+            (ADMIN_USERNAME, admin_hash)
         )
         conn.commit()
-        print("Default admin account created (Username: admin, Password: admin123).")
+        print(f"Default admin account created (Username: {ADMIN_USERNAME}).")
+    else:
+        # Ensure admin password hash is valid for current werkzeug version
+        if ADMIN_PASSWORD:
+            cursor.execute("UPDATE admin SET password_hash = ? WHERE username = ?", (generate_password_hash(ADMIN_PASSWORD), ADMIN_USERNAME))
+            conn.commit()
 
     # Read and run seed.sql to populate initial sample records if tables are empty
-    cursor.execute("SELECT COUNT(*) as count FROM awareness_content")
-    if cursor.fetchone()['count'] == 0:
-        with open(SEED_PATH, 'r', encoding='utf-8') as f:
-            conn.executescript(f.read())
-        
-        # Ensure admin password hash in database is valid for current werkzeug version
-        cursor.execute("UPDATE admin SET password_hash = ? WHERE username = ?", (generate_password_hash('admin123'), 'admin'))
-        conn.commit()
-        print("Sample seed data loaded successfully from seed.sql.")
+    # Only run seed.sql for default admin (production); tests use their own admin and data
+    if ADMIN_USERNAME == 'admin':
+        cursor.execute("SELECT COUNT(*) as count FROM awareness_content")
+        if cursor.fetchone()['count'] == 0:
+            with open(SEED_PATH, 'r', encoding='utf-8') as f:
+                conn.executescript(f.read())
+
+            # Update admin password hash in seed data to match current env
+            if ADMIN_PASSWORD:
+                cursor.execute("UPDATE admin SET password_hash = ? WHERE username = ?", (generate_password_hash(ADMIN_PASSWORD), ADMIN_USERNAME))
+                conn.commit()
+            print("Sample seed data loaded successfully from seed.sql.")
     else:
-        print("Seed data already present; skipping seed script.")
+        print("Test mode: skipping seed.sql (using test admin).")
 
     conn.close()
 

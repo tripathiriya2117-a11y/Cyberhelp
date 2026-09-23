@@ -13,11 +13,6 @@
                 <h2 class="fw-bold text-dark mb-0">AI Cyber Safety Assistant</h2>
                 <p class="text-secondary small mb-0">Ask questions about suspicious links, phishing SMS, UPI fraud, or emergency incident reporting.</p>
             </div>
-            <div>
-                <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#apiKeyModal">
-                    <i class="bi bi-key-fill text-warning me-1"></i> API Key Settings
-                </button>
-            </div>
         </div>
     </div>
 </section>
@@ -33,7 +28,7 @@
                     <div>
                         <h6 class="fw-bold text-dark mb-0">CyberHelp Incident Assistant</h6>
                         <span class="text-success small d-flex align-items-center gap-1">
-                            <span class="badge bg-success rounded-circle p-1"></span> Active &amp; Ready
+                            <span class="badge bg-success rounded-circle p-1"></span> Active & Ready
                         </span>
                     </div>
                 </div>
@@ -89,41 +84,6 @@
         </div>
     </div>
 </section>
-
-<!-- Gemini API Key Modal -->
-<div class="modal fade" id="apiKeyModal" tabindex="-1" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="apiKeyModalLabel"><i class="bi bi-key-fill text-warning me-2"></i> Gemini API Key Configuration</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <p class="small text-secondary mb-3">
-                    CyberHelp connects to Google's Gemini API for dynamic AI threat analysis. You can provide your free API key below (saved only in your browser) or set it in the <code>.env</code> file.
-                </p>
-                <div class="mb-3">
-                    <label for="customApiKey" class="form-label fw-semibold text-dark">Google Gemini API Key</label>
-                    <input type="password" class="form-control" id="customApiKey" placeholder="AIzaSy...">
-                    <div class="form-text small" id="apiKeyStatus">
-                        {% if has_env_key %}
-                            <span class="text-success"><i class="bi bi-check-circle-fill"></i> Server .env API key is active.</span>
-                        {% else %}
-                            <span class="text-muted">No server .env key detected. You can enter one here or use the built-in offline advisor.</span>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="alert alert-light border small text-muted mb-0">
-                    <i class="bi bi-info-circle text-primary me-1"></i> You can get a free Gemini API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="fw-semibold">Google AI Studio</a>.
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary rounded-pill px-4" id="saveApiKeyBtn" data-bs-dismiss="modal">Save Key</button>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_scripts %}
