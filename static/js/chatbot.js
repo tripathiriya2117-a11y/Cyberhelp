@@ -106,13 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (el) el.remove();
     }
 
-            function formatMarkdown(md) {
+function formatMarkdown(md) {
         if (!md) return '';
         // Escape HTML - use proper HTML entities
         let escaped = md
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+            .replace(/&/g, '&')
+            .replace(/</g, '<')
+            .replace(/>/g, '>');
 
         // Bold
         escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -121,8 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Markdown Links
         escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" class="text-primary fw-semibold">$1 <i class="bi bi-box-arrow-up-right small"></i></a>');
         // New lines to br
-        escaped = escaped.replace(/
-/g, '<br>');
+        escaped = escaped.replace(/\n/g, '<br>');
         return escaped;
     }
 });
