@@ -1,99 +1,217 @@
 {% extends "base.html" %}
 
-{% block title %}Scam Information Library - CyberHelp{% endblock %}
+{% block title %}Scam Information Library - CyberHelp Case Files{% endblock %}
 
 {% block content %}
-<section class="py-5 bg-white border-bottom">
+<!-- Comic Hero Section -->
+<section class="py-5 comic-halftone-red position-relative">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center g-4">
             <div class="col-lg-8">
-                <span class="badge bg-danger-subtle text-danger fw-bold mb-2">Threat Intelligence</span>
-                <h1 class="fw-bold display-6 mb-2">Scam Information Library</h1>
-                <p class="text-secondary mb-0">
-                    A searchable repository of documented cyber fraud patterns, social engineering tricks, red flag indicators, and prevention countermeasures.
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="comic-stamp"><i class="bi bi-shield-slash-fill"></i> CLASSIFIED THREAT INTELLIGENCE</span>
+                    <span class="comic-stamp comic-stamp-yellow d-none d-sm-inline-flex"><i class="bi bi-lightning-charge-fill"></i> CRIME DOSSIER</span>
+                </div>
+                <h1 class="comic-title comic-title-red mb-2">SCAM INFORMATION ARCHIVES</h1>
+                <p class="comic-subtitle mb-0">
+                    Searchable repository of active cyber villains, deceptive social engineering traps, and tactical defense playbooks. Inspect each case file to uncover the modus operandi!
                 </p>
             </div>
-            <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="input-group shadow-sm">
-                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                    <input type="text" id="liveSearchCards" class="form-control border-start-0 ps-0" placeholder="Search scams (e.g. Telegram, Loan, Bill)..." value="{{ search_query }}">
+            <div class="col-lg-4">
+                <div class="comic-search-wrapper">
+                    <i class="bi bi-search text-dark fs-5 ps-3"></i>
+                    <input type="text" id="liveSearchCards" class="form-control" placeholder="Search case files (Telegram, Loan, SMS)..." value="{{ search_query }}">
+                    <button type="button" class="comic-search-btn" title="Search Dossiers">
+                        <i class="bi bi-funnel-fill"></i>
+                    </button>
+                </div>
+                <div class="small text-muted mt-2 d-flex align-items-center gap-1 ps-1">
+                    <i class="bi bi-info-circle-fill text-danger"></i> Type to filter all case files live on this page.
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-4">
+<!-- Case Files Directory -->
+<section class="py-5 bg-white">
     <div class="container">
         <!-- Category Filter Pills -->
-        <div class="d-flex flex-wrap gap-2 mb-4">
-            <a href="{{ url_for('scam_library', category='all') }}" class="filter-btn {% if not selected_category or selected_category == 'all' %}active{% endif %} text-decoration-none">
-                All Scams ({{ scams|length }})
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-4 pb-2 border-bottom border-2 border-dark border-opacity-10">
+            <span class="text-uppercase fw-bold text-dark small me-2" style="font-family: var(--font-comic); font-size: 1rem; letter-spacing: 0.05em;">
+                <i class="bi bi-folder-fill text-warning me-1"></i> Dossier Categories:
+            </span>
+            <a href="{{ url_for('scam_library', category='all') }}" class="comic-filter-pill {% if not selected_category or selected_category == 'all' %}active{% endif %}">
+                All Case Files <span class="badge-count">{{ scams|length }}</span>
             </a>
             {% for cat in categories %}
-                <a href="{{ url_for('scam_library', category=cat) }}" class="filter-btn {% if selected_category == cat %}active{% endif %} text-decoration-none">
+                <a href="{{ url_for('scam_library', category=cat) }}" class="comic-filter-pill {% if selected_category == cat %}active{% endif %}">
                     {{ cat }}
                 </a>
             {% endfor %}
         </div>
 
+        <!-- Mapping Illustrations by Scam ID -->
+        {% set scam_illustration_map = {
+            1: 'scam_telegram_job.svg',
+            2: 'scam_loan_app.svg',
+            3: 'scam_electricity_bill.svg',
+            4: 'scam_courier_drugs.svg',
+            5: 'scam_lottery_kbc.svg',
+            6: 'scam_remote_access.svg',
+            7: 'scam_search_poisoning.svg',
+            8: 'scam_romance_gift.svg',
+            9: 'scam_amazon_review.svg',
+            10: 'scam_pig_butchering.svg'
+        } %}
+
         <!-- Scams Grid -->
-        <div class="row g-4" id="scamsGrid">
+        <div class="row g-4 pt-2" id="scamsGrid">
             {% if scams %}
                 {% for scam in scams %}
+                    {% set img_file = scam_illustration_map.get(scam['scam_id'], 'scam_telegram_job.svg') %}
                     <div class="col-md-6 filterable-card" data-title="{{ scam['title'] | lower }}" data-desc="{{ scam['description'] | lower }}" data-category="{{ scam['category'] | lower }}">
-                        <div class="cyber-card border-top border-4 border-danger">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="card-category-tag bg-danger-subtle text-danger">{{ scam['category'] }}</span>
-                                <span class="badge bg-light text-secondary border small">Active Threat Pattern</span>
+                        <div class="comic-case-file">
+                            <!-- Folder Tab -->
+                            <div class="case-folder-tab">
+                                <i class="bi bi-folder2-open"></i> CASE #{{ "%03d"|format(scam['scam_id']) }}
                             </div>
-                            <h5 class="fw-bold text-dark mb-3">{{ scam['title'] }}</h5>
-                            <p class="text-secondary small mb-4 flex-grow-1" style="white-space: pre-line;">
-                                {{ scam['description'][:240] }}{% if scam['description']|length > 240 %}...{% endif %}
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <button class="btn btn-outline-danger btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#scamModal{{ scam['scam_id'] }}">
-                                    <i class="bi bi-shield-exclamation me-1"></i> View Full Modus Operandi
+
+                            <!-- Hazard Tape Accent -->
+                            <div class="case-hazard-strip"></div>
+
+                            <!-- Comic Illustration Thumbnail Frame -->
+                            <div class="scam-thumb-frame">
+                                <img src="{{ url_for('static', filename='img/illustrations/' + img_file) }}" alt="{{ scam['title'] }}" class="scam-thumb-img" loading="lazy">
+                                <div class="position-absolute top-0 end-0 m-2">
+                                    <span class="badge bg-danger text-white font-monospace small border border-light">THREAT #{{ "%03d"|format(scam['scam_id']) }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Header Tags -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="case-category-tag">
+                                    <i class="bi bi-tag-fill"></i> {{ scam['category'] }}
+                                </span>
+                                <span class="comic-stamp">
+                                    <i class="bi bi-exclamation-triangle-fill"></i> ACTIVE THREAT
+                                </span>
+                            </div>
+
+                            <!-- Case Title -->
+                            <h4 class="case-title">{{ scam['title'] }}</h4>
+
+                            <!-- Dossier Preview Box -->
+                            <div class="case-dossier-box">
+                                <p class="case-snippet-text mb-0">
+                                    {{ scam['description'][:210] }}{% if scam['description']|length > 210 %}...{% endif %}
+                                </p>
+                            </div>
+
+                            <!-- Action Bar -->
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
+                                <button type="button" class="btn-comic-danger" data-bs-toggle="modal" data-bs-target="#scamModal{{ scam['scam_id'] }}">
+                                    <i class="bi bi-folder-symlink-fill"></i> Open Case File
                                 </button>
-                                <a href="{{ url_for('reporting') }}" class="btn btn-link text-secondary text-decoration-none small p-0">
-                                    Report <i class="bi bi-arrow-right"></i>
+                                <a href="{{ url_for('reporting') }}" class="btn-comic-report" title="Report this cybercrime">
+                                    Report Scheme <i class="bi bi-arrow-right-circle-fill text-danger fs-5"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Scam Detail Modal -->
+                    <!-- Classified Case File Modal (4-Phase Visual Investigation Sequence) -->
                     <div class="modal fade" id="scamModal{{ scam['scam_id'] }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content border-0 shadow-lg rounded-4">
-                                <div class="modal-header bg-danger-subtle border-bottom-0">
+                            <div class="modal-content comic-modal-content">
+                                <!-- Modal Header -->
+                                <div class="comic-modal-header d-flex justify-content-between align-items-start">
                                     <div>
-                                        <span class="badge bg-danger text-white mb-1">{{ scam['category'] }}</span>
-                                        <h4 class="modal-title fw-bold text-dark">{{ scam['title'] }}</h4>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="comic-stamp"><i class="bi bi-shield-slash-fill"></i> CLASSIFIED EVIDENCE DOSSIER</span>
+                                            <span class="badge bg-dark text-white font-monospace">FILE #{{ "%03d"|format(scam['scam_id']) }}</span>
+                                        </div>
+                                        <h3 class="comic-title mb-0" style="font-size: 1.85rem; color: #991b1b;">
+                                            {{ scam['title'] }}
+                                        </h3>
+                                        <span class="badge bg-danger text-white mt-1 text-uppercase" style="font-family: var(--font-comic); font-size: 0.85rem; letter-spacing: 0.05em;">
+                                            Category: {{ scam['category'] }}
+                                        </span>
                                     </div>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close border-2 border-dark" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body p-4">
-                                    <h6 class="fw-bold text-dark text-uppercase letter-spacing-1 mb-2">
-                                        <i class="bi bi-file-text-fill text-danger me-1"></i> Threat Overview &amp; Modus Operandi
-                                    </h6>
-                                    <div class="text-secondary lh-lg mb-4" style="white-space: pre-line; font-size: 0.98rem;">
-                                        {{ scam['description'] }}
+
+                                <!-- Modal Body: 4-Phase Visual Investigation Sequence -->
+                                <div class="comic-modal-body">
+                                    <!-- Case Banner Illustration -->
+                                    <div class="text-center p-3 mb-3 border border-2 border-dark rounded-3 bg-light" style="max-height: 200px; overflow: hidden;">
+                                        <img src="{{ url_for('static', filename='img/illustrations/' + img_file) }}" alt="{{ scam['title'] }}" style="max-height: 180px; width: auto; object-fit: contain;">
                                     </div>
 
-                                    <div class="card bg-light border p-3 rounded-3 mb-3">
-                                        <h6 class="fw-bold text-danger mb-2">
-                                            <i class="bi bi-exclamation-octagon-fill me-1"></i> Golden Safety Rule
-                                        </h6>
-                                        <p class="small text-dark mb-0">
-                                            Never download APK files sent via WhatsApp/Telegram, never share AnyDesk/TeamViewer session codes, and remember that law enforcement officers never demand money or conduct hearings over Skype/video calls.
+                                    <!-- Phase 1: Modus Operandi & Threat Mechanics -->
+                                    <div class="scam-sequence-step">
+                                        <span class="scam-phase-badge scam-phase-1">
+                                            <i class="bi bi-incognito"></i> Phase 1 &bull; Modus Operandi &amp; Threat Mechanics
+                                        </span>
+                                        <div class="text-secondary lh-base small font-main mt-2" style="white-space: pre-line; font-size: 0.95rem;">
+                                            {{ scam['description'] }}
+                                        </div>
+                                    </div>
+
+                                    <!-- Phase 2: Warning Signs & Red Flags -->
+                                    <div class="scam-sequence-step">
+                                        <span class="scam-phase-badge scam-phase-2">
+                                            <i class="bi bi-exclamation-triangle-fill"></i> Phase 2 &bull; Warning Signs &amp; Red-Flag Markers
+                                        </span>
+                                        <ul class="list-unstyled mb-0 small text-dark d-flex flex-column gap-2 mt-2">
+                                            <li class="d-flex align-items-start gap-2">
+                                                <i class="bi bi-x-octagon-fill text-danger flex-shrink-0 mt-1"></i>
+                                                <span><strong>Unsolicited Urgency:</strong> Demands immediate action with countdown timers, disconnection threats, or sudden lottery winnings.</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2">
+                                                <i class="bi bi-x-octagon-fill text-danger flex-shrink-0 mt-1"></i>
+                                                <span><strong>Off-Platform Redirection:</strong> Coercing victims into private Telegram groups, WhatsApp calls, or remote desk screen sharing.</span>
+                                            </li>
+                                            <li class="d-flex align-items-start gap-2">
+                                                <i class="bi bi-x-octagon-fill text-danger flex-shrink-0 mt-1"></i>
+                                                <span><strong>Financial Inversion:</strong> Asking the victim to pay processing fees, taxes, or security deposits to receive promised funds or jobs.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Phase 3: Shield Protocol & Golden Safety Rule -->
+                                    <div class="scam-sequence-step" style="background: #fefce8; border-color: #ca8a04;">
+                                        <span class="scam-phase-badge scam-phase-3">
+                                            <i class="bi bi-shield-fill-check"></i> Phase 3 &bull; Cyber Squad Shield Protocol &amp; Golden Rule
+                                        </span>
+                                        <p class="small text-dark mb-0 fw-semibold mt-2">
+                                            <i class="bi bi-key-fill text-warning me-1"></i> <strong>Golden Rule:</strong> Never enter your UPI PIN to receive money, never share OTPs or AnyDesk/TeamViewer session codes, and never transfer money to verify an account. Official police, CBI, and RBI never conduct "Digital Arrests" or demand verification deposits over Skype!
                                         </p>
                                     </div>
+
+                                    <!-- Phase 4: Emergency Response & Recovery Protocol -->
+                                    <div class="scam-sequence-step" style="background: #f0f9ff; border-color: #0284c7;">
+                                        <span class="scam-phase-badge scam-phase-4">
+                                            <i class="bi bi-telephone-inbound-fill"></i> Phase 4 &bull; Emergency Response (Helpline 1930 &amp; Golden Hour)
+                                        </span>
+                                        <div class="small text-dark mt-2">
+                                            <p class="mb-2">
+                                                <strong>Golden Hour Protocol:</strong> Report immediately within 2 hours by calling the National Cyber Crime Helpline at <a href="tel:1930" class="badge bg-danger text-white fs-6 text-decoration-none">1930</a>. Speed is vital to freeze stolen funds before fraudsters route them through mule accounts.
+                                            </p>
+                                            <p class="mb-0">
+                                                File an official digital incident report at the national portal: <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="text-primary fw-bold text-decoration-underline">cybercrime.gov.in</a>.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="modal-footer border-top-0 pt-0">
-                                    <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Close</button>
-                                    <a href="{{ url_for('reporting') }}" class="btn btn-danger rounded-pill">
-                                        <i class="bi bi-megaphone-fill me-1"></i> How to Report this Fraud
+
+                                <!-- Modal Footer -->
+                                <div class="comic-modal-footer d-flex justify-content-between align-items-center">
+                                    <button type="button" class="btn btn-outline-dark fw-bold rounded-3" data-bs-dismiss="modal" style="border-width: 2px;">
+                                        <i class="bi bi-x-circle me-1"></i> Close Dossier
+                                    </button>
+                                    <a href="{{ url_for('reporting') }}" class="btn-comic-danger">
+                                        <i class="bi bi-megaphone-fill me-1"></i> Official Reporting Protocol
                                     </a>
                                 </div>
                             </div>
@@ -102,12 +220,18 @@
                 {% endfor %}
             {% else %}
                 <div class="col-12 text-center py-5">
-                    <i class="bi bi-shield-x fs-1 text-muted"></i>
-                    <h5 class="mt-3 text-secondary">No scam entries found matching your search.</h5>
-                    <a href="{{ url_for('scam_library') }}" class="btn btn-outline-danger btn-sm rounded-pill mt-2">View All Scams</a>
+                    <div class="p-5 border border-3 border-dark rounded-4 bg-light shadow" style="max-width: 550px; margin: 0 auto;">
+                        <i class="bi bi-search fs-1 text-danger"></i>
+                        <h3 class="comic-title text-dark mt-3">NO CRIMES MATCH THIS SEARCH!</h3>
+                        <p class="text-muted">No documented scam entries match your current search criteria.</p>
+                        <a href="{{ url_for('scam_library') }}" class="btn-comic-danger mt-2">
+                            Reset All Filters
+                        </a>
+                    </div>
                 </div>
             {% endif %}
         </div>
     </div>
 </section>
 {% endblock %}
+

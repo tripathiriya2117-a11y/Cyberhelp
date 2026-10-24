@@ -3,39 +3,47 @@
 {% block title %}Safety Validation Tools - CyberHelp{% endblock %}
 
 {% block content %}
-<section class="py-5 bg-white border-bottom">
+<!-- Comic Page Header -->
+<section class="py-5 comic-halftone-blue position-relative">
     <div class="container">
         <div class="max-w-700">
-            <span class="badge bg-success-subtle text-success fw-bold mb-2">Interactive Validation Suite</span>
-            <h1 class="fw-bold display-6 mb-2">Client-Side Cyber Safety Tools</h1>
-            <p class="text-secondary mb-0">
-                Lightweight, private utilities to verify password robustness and analyze suspicious web links for phishing heuristics. All password computations are processed locally inside your web browser.
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="comic-stamp"><i class="bi bi-tools"></i> UTILITY WORKBENCH</span>
+                <span class="comic-stamp comic-stamp-yellow d-none d-sm-inline-flex"><i class="bi bi-shield-check"></i> ZERO-KNOWLEDGE LOCAL ANALYSIS</span>
+            </div>
+            <h1 class="comic-title comic-title-blue mb-2">SAFETY VALIDATION SUITE</h1>
+            <p class="comic-subtitle mb-0">
+                Client-side cryptographic analyzers to test password strength against supercomputer brute-force attacks, and inspect suspicious links for phishing heuristics.
             </p>
         </div>
     </div>
 </section>
 
-<section class="py-5">
+<!-- Tools Arena -->
+<section class="py-5 bg-white">
     <div class="container">
         <div class="row g-5">
             <!-- Tool 1: Password Strength & Entropy Analyzer -->
             <div class="col-lg-6">
-                <div class="tool-container h-100">
-                    <div class="d-flex align-items-center gap-3 mb-4">
-                        <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
-                            <i class="bi bi-key-fill"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold text-dark mb-0">Password Strength &amp; Entropy Meter</h4>
-                            <span class="text-muted small">Pure client-side cryptographic analysis</span>
+                <div class="comic-panel-card h-100">
+                    <!-- Tool Header Tab -->
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-2 border-dark">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="shield-icon" style="width: 38px; height: 38px; background: #fef08a; border: 2px solid var(--comic-ink); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--comic-ink); box-shadow: 2px 2px 0 var(--comic-ink);">
+                                <i class="bi bi-key-fill text-dark"></i>
+                            </div>
+                            <div>
+                                <h4 class="comic-title mb-0" style="font-size: 1.5rem;">PASSWORD FORTRESS METER</h4>
+                                <span class="badge bg-dark text-white font-monospace small">LOCAL BROWSER EVALUATION</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="pwdInput" class="form-label fw-semibold text-dark">Enter or Test Password</label>
+                        <label for="pwdInput" class="comic-form-label">Type or Test Password</label>
                         <div class="input-group">
-                            <input type="password" id="pwdInput" class="form-control form-control-lg font-monospace" placeholder="Type a password to test..." autocomplete="off">
-                            <button class="btn btn-outline-secondary" type="button" id="togglePwdVisibility">
+                            <input type="password" id="pwdInput" class="form-control comic-form-control font-monospace" placeholder="Type a passphrase to test..." autocomplete="off">
+                            <button class="btn btn-outline-dark border-2 border-dark" type="button" id="togglePwdVisibility" style="box-shadow: 2px 2px 0 var(--comic-ink);">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
@@ -44,124 +52,187 @@
                     <!-- Visual Strength Meter -->
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="small text-secondary fw-semibold">Security Rating:</span>
-                            <span id="strengthLabel" class="fw-bold text-muted small">Enter a password</span>
+                            <span class="small font-comic text-dark" style="letter-spacing: 0.05em;">DEFENSE RATING:</span>
+                            <span id="strengthLabel" class="fw-bold font-comic fs-6 text-muted">ENTER A PASSWORD</span>
                         </div>
-                        <div class="strength-meter-bar">
+                        <div class="quiz-comic-progress-track" style="height: 12px;">
                             <div id="strengthBar" class="strength-meter-progress" style="width: 0%;"></div>
                         </div>
                     </div>
 
                     <!-- Metrics Grid -->
-                    <div class="row g-2 mb-4">
+                    <div class="row g-2 mb-3">
                         <div class="col-6">
-                            <div class="p-3 bg-light rounded-3 border text-center">
-                                <span class="text-secondary small d-block mb-1">Shannon Entropy</span>
-                                <h5 id="entropyValue" class="fw-bold text-primary mb-0 font-monospace">0 bits</h5>
+                            <div class="p-3 bg-light rounded-3 border border-2 border-dark text-center" style="box-shadow: 2.5px 2.5px 0 var(--comic-ink);">
+                                <span class="font-comic text-secondary small d-block mb-1 letter-spacing-1">SHANNON ENTROPY</span>
+                                <h4 id="entropyValue" class="fw-bold text-primary mb-0 font-monospace" style="font-size: 1.4rem;">0 bits</h4>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="p-3 bg-light rounded-3 border text-center">
-                                <span class="text-secondary small d-block mb-1">Estimated Crack Time</span>
-                                <h5 id="crackTimeValue" class="fw-bold text-dark mb-0 font-monospace">Instant</h5>
+                            <div class="p-3 bg-light rounded-3 border border-2 border-dark text-center" style="box-shadow: 2.5px 2.5px 0 var(--comic-ink);">
+                                <span class="font-comic text-secondary small d-block mb-1 letter-spacing-1">BRUTE-FORCE RESISTANCE</span>
+                                <h4 id="crackTimeValue" class="fw-bold text-dark mb-0 font-monospace" style="font-size: 1.3rem;">Instant</h4>
                             </div>
                         </div>
                     </div>
 
                     <!-- Warning for dictionary words -->
-                    <div id="patternWarning" class="alert alert-warning py-2 px-3 small d-none mb-3"></div>
+                    <div id="patternWarning" class="alert alert-comic alert-comic-warning py-2 px-3 small d-none mb-3"></div>
 
-                    <!-- Checklist -->
-                    <h6 class="fw-bold text-dark mb-2 small text-uppercase letter-spacing-1">Strength Checklist</h6>
-                    <div class="row g-1">
+                    <!-- Strength Checklist -->
+                    <h6 class="comic-title text-dark mb-2" style="font-size: 1.15rem; letter-spacing: 0.05em;">SECURITY CHECKLIST</h6>
+                    <div class="row g-1 mb-3">
                         <div class="col-sm-6">
-                            <div id="reqLength" class="text-muted small d-flex align-items-center gap-1 mb-1">
-                                <i class="bi bi-circle"></i> Minimum 12 characters
+                            <div id="reqLength" class="text-muted small d-flex align-items-center gap-1 mb-1 fw-semibold">
+                                <i class="bi bi-circle"></i> Min 12 characters
                             </div>
-                            <div id="reqUpper" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                            <div id="reqUpper" class="text-muted small d-flex align-items-center gap-1 mb-1 fw-semibold">
                                 <i class="bi bi-circle"></i> Uppercase letters (A-Z)
                             </div>
-                            <div id="reqLower" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                            <div id="reqLower" class="text-muted small d-flex align-items-center gap-1 mb-1 fw-semibold">
                                 <i class="bi bi-circle"></i> Lowercase letters (a-z)
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div id="reqNumber" class="text-muted small d-flex align-items-center gap-1 mb-1">
+                            <div id="reqNumber" class="text-muted small d-flex align-items-center gap-1 mb-1 fw-semibold">
                                 <i class="bi bi-circle"></i> Numbers (0-9)
                             </div>
-                            <div id="reqSpecial" class="text-muted small d-flex align-items-center gap-1 mb-1">
-                                <i class="bi bi-circle"></i> Special characters (!@#$%...)
+                            <div id="reqSpecial" class="text-muted small d-flex align-items-center gap-1 mb-1 fw-semibold">
+                                <i class="bi bi-circle"></i> Symbols (!@#$%...)
                             </div>
                         </div>
                     </div>
 
-                    <div class="alert alert-light border small text-muted mt-4 mb-0">
-                        <i class="bi bi-lock-fill text-success me-1"></i> <strong>Privacy Guarantee:</strong> Passwords are never sent to any server. All calculations execute locally on your machine.
+                    <div class="alert alert-comic alert-comic-info small mb-0 mt-auto">
+                        <i class="bi bi-shield-lock-fill text-primary me-1 fs-6"></i> <strong>Zero-Knowledge Guarantee:</strong> Passwords are never transmitted over the internet. All entropy and dictionary calculations execute purely in client-side RAM.
                     </div>
                 </div>
             </div>
 
-            <!-- Tool 2: URL Safety & Heuristic Link Scanner -->
+            <!-- Tool 2: URL Safety & Phishing Scanner -->
             <div class="col-lg-6">
-                <div class="tool-container h-100">
-                    <div class="d-flex align-items-center gap-3 mb-4">
-                        <div class="p-2 bg-danger-subtle text-danger rounded-3 fs-4">
-                            <i class="bi bi-link-45deg"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold text-dark mb-0">URL Safety &amp; Phishing Scanner</h4>
-                            <span class="text-muted small">Heuristic inspection for spoofed domains &amp; dangerous links</span>
+                <div class="comic-panel-card h-100">
+                    <!-- Tool Header Tab -->
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-2 border-dark">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="shield-icon" style="width: 38px; height: 38px; background: #fee2e2; border: 2px solid var(--comic-ink); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #991b1b; box-shadow: 2px 2px 0 var(--comic-ink);">
+                                <i class="bi bi-link-45deg"></i>
+                            </div>
+                            <div>
+                                <h4 class="comic-title mb-0" style="font-size: 1.5rem; color: #991b1b;">PHISHING RADAR SCANNER</h4>
+                                <span class="badge bg-danger text-white font-monospace small">HEURISTIC INSPECTOR</span>
+                            </div>
                         </div>
                     </div>
 
                     <form id="urlCheckerForm" class="mb-3">
                         <div class="mb-3">
-                            <label for="urlInput" class="form-label fw-semibold text-dark">Enter Web Link to Inspect</label>
+                            <label for="urlInput" class="comic-form-label">Suspicious Web Link to Inspect</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-globe"></i></span>
-                                <input type="text" id="urlInput" class="form-control form-control-lg font-monospace fs-6" placeholder="e.g. http://192.168.1.1/login or bit.ly/3xYz" required>
+                                <span class="input-group-text bg-light border-2 border-dark"><i class="bi bi-globe"></i></span>
+                                <input type="text" id="urlInput" class="form-control comic-form-control font-monospace" placeholder="e.g. http://192.168.1.1/sbi or update-kyc.xyz" required>
                             </div>
                         </div>
 
-                        <!-- Sample Test Buttons -->
+                        <!-- Sample Test Pills -->
                         <div class="d-flex flex-wrap gap-2 mb-3">
-                            <span class="small text-muted align-self-center me-1">Try samples:</span>
-                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" onclick="document.getElementById('urlInput').value='http://192.168.1.55/sbi-kyc-update.php'">Sample IP Link</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" onclick="document.getElementById('urlInput').value='http://secure-sbi-online.update-login.xyz/portal'">Sample Spoofed Phishing</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" onclick="document.getElementById('urlInput').value='https://cybercrime.gov.in'">Sample Safe Official Portal</button>
+                            <span class="small font-comic text-muted align-self-center me-1">TEST SAMPLES:</span>
+                            <button type="button" class="btn-comic-outline btn-comic-sm py-0 px-2" onclick="document.getElementById('urlInput').value='http://192.168.1.55/sbi-kyc-update.php'">Sample IP Link</button>
+                            <button type="button" class="btn-comic-outline btn-comic-sm py-0 px-2" onclick="document.getElementById('urlInput').value='http://secure-sbi-online.update-login.xyz/portal'">Spoofed Domain</button>
+                            <button type="button" class="btn-comic-outline btn-comic-sm py-0 px-2" onclick="document.getElementById('urlInput').value='https://cybercrime.gov.in'">Official Portal</button>
                         </div>
 
-                        <button type="submit" id="analyzeUrlBtn" class="btn btn-primary btn-lg w-100 rounded-pill fw-semibold">
-                            <i class="bi bi-shield-check me-1"></i> Analyze URL
+                        <button type="submit" id="analyzeUrlBtn" class="btn-comic-primary btn-comic-lg w-100 justify-content-center">
+                            <i class="bi bi-shield-check me-1"></i> SCAN TARGET URL
                         </button>
                     </form>
 
-                    <!-- Scan Results Card -->
-                    <div id="urlResultBox" class="url-result-box bg-light d-none">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <span id="urlVerdictBadge" class="badge bg-secondary px-3 py-2 fs-6">ANALYZING</span>
-                            </div>
+                    <!-- Scan Results Box -->
+                    <div id="urlResultBox" class="scam-sequence-step d-none mt-3" style="background: #fafaf9;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span id="urlVerdictBadge" class="badge bg-secondary font-comic fs-6 px-3 py-2 border border-dark">ANALYZING</span>
                             <div class="text-end">
-                                <span class="small text-muted d-block">Risk Score</span>
-                                <span id="urlRiskScoreText" class="fw-bold text-dark font-monospace">0/100</span>
+                                <span class="small font-comic text-muted d-block">THREAT SCORE</span>
+                                <span id="urlRiskScoreText" class="fw-bold text-dark font-monospace fs-5">0/100</span>
                             </div>
                         </div>
 
-                        <div class="progress mb-3" style="height: 8px;">
+                        <div class="quiz-comic-progress-track mb-3" style="height: 10px;">
                             <div id="urlRiskBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
                         </div>
 
                         <h6 id="urlVerdictTitle" class="fw-bold text-dark mb-1">Target Domain:</h6>
-                        <div id="urlHostDisplay" class="font-monospace small text-muted text-break mb-3"></div>
+                        <div id="urlHostDisplay" class="font-monospace small text-muted text-break mb-3 p-2 bg-white border rounded"></div>
 
-                        <div class="card p-3 bg-white border mb-3">
-                            <h6 class="fw-bold text-dark small text-uppercase letter-spacing-1 mb-1">Recommendation</h6>
-                            <p id="urlRecommendation" class="small text-secondary mb-0"></p>
+                        <div class="p-3 bg-white border border-2 border-dark rounded-3 mb-3" style="box-shadow: 2px 2px 0 var(--comic-ink);">
+                            <h6 class="font-comic text-danger small text-uppercase letter-spacing-1 mb-1">
+                                <i class="bi bi-shield-exclamation me-1"></i> TACTICAL RECOMMENDATION
+                            </h6>
+                            <p id="urlRecommendation" class="small text-secondary mb-0 fw-semibold"></p>
                         </div>
 
-                        <h6 class="fw-bold text-dark small text-uppercase letter-spacing-1 mb-2">Detected Threat Signals</h6>
-                        <div id="urlFlagsList"></div>
+                        <h6 class="font-comic text-dark small text-uppercase letter-spacing-1 mb-2">DETECTED THREAT SIGNALS</h6>
+                        <div id="urlFlagsList" class="d-flex flex-column gap-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cyber Safety Field Tips Section -->
+        <div class="mt-5 pt-4 border-top border-3 border-dark">
+            <div class="text-center max-w-700 mx-auto mb-4">
+                <span class="comic-stamp comic-stamp-yellow mb-2"><i class="bi bi-lightning-charge-fill"></i> SQUAD PLAYBOOK</span>
+                <h3 class="comic-title mb-1">TACTICAL DIGITAL DEFENSE TIPS</h3>
+                <p class="comic-subtitle">Actionable rules every citizen must follow to prevent account compromise.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Tip 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="comic-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-primary text-white font-comic">RULE #01</span>
+                            <h5 class="fw-bold text-dark mb-0">Passphrase Shield</h5>
+                        </div>
+                        <p class="small text-secondary mb-0">
+                            Combine 4 unrelated words into long passphrases (e.g., <code>correct-horse-battery-staple-9#</code>). Length beats complexity against GPU dictionary attack tools!
+                        </p>
+                    </div>
+                </div>
+                <!-- Tip 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="comic-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-danger text-white font-comic">RULE #02</span>
+                            <h5 class="fw-bold text-dark mb-0">Root Domain Check</h5>
+                        </div>
+                        <p class="small text-secondary mb-0">
+                            Scammers use fake subdomains like <code>onlinesbi.update-login.xyz</code>. Always verify the characters right before the first single slash!
+                        </p>
+                    </div>
+                </div>
+                <!-- Tip 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="comic-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-warning text-dark font-comic">RULE #03</span>
+                            <h5 class="fw-bold text-dark mb-0">App-Based 2FA</h5>
+                        </div>
+                        <p class="small text-secondary mb-0">
+                            Prefer Authenticator apps (Google/Microsoft Authenticator) over SMS OTPs. SMS OTPs are vulnerable to SIM swap and SS7 interception attacks!
+                        </p>
+                    </div>
+                </div>
+                <!-- Tip 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="comic-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-success text-white font-comic">RULE #04</span>
+                            <h5 class="fw-bold text-dark mb-0">Zero-Trust Wi-Fi</h5>
+                        </div>
+                        <p class="small text-secondary mb-0">
+                            Never access banking apps or UPI accounts on free public Wi-Fi networks without an encrypted VPN tunnel. Beware of Evil Twin spoofed hotspots!
+                        </p>
                     </div>
                 </div>
             </div>
@@ -174,3 +245,4 @@
 <script src="{{ url_for('static', filename='js/password_tool.js') }}"></script>
 <script src="{{ url_for('static', filename='js/url_checker.js') }}"></script>
 {% endblock %}
+

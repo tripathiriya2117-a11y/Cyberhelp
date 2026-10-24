@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+    
+    <defs>
+        <pattern id="halftone-dot" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0f172a" opacity="0.12"/>
+        </pattern>
+        <pattern id="halftone-red" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#dc2626" opacity="0.15"/>
+        </pattern>
+        <pattern id="halftone-blue" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0284c7" opacity="0.15"/>
+        </pattern>
+        <pattern id="hazard-stripe" width="20" height="20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#facc15" stroke-width="10" />
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#0f172a" stroke-width="10" />
+        </pattern>
+        <filter id="comic-shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#0f172a" flood-opacity="1"/>
+        </filter>
+    </defs>
+
+    <rect width="400" height="220" fill="#f8fafc" rx="10"/>
+    <rect width="400" height="220" fill="url(#halftone-dot)" rx="10"/>
+    <rect x="8" y="8" width="384" height="204" fill="none" stroke="#0f172a" stroke-width="3" rx="8"/>
+    
+    <!-- Action Burst Backdrop -->
+    <polygon points="200,20 225,55 270,30 260,75 305,80 275,115 310,145 265,150 275,195 230,175 200,210 170,175 125,195 135,150 90,145 125,115 95,80 140,75 130,30 175,55" fill="#fef08a" stroke="#0f172a" stroke-width="2.5" opacity="0.8"/>
+    
+    <!-- Phishing Hook Line -->
+    <path d="M 120 10 Q 180 80 190 110" fill="none" stroke="#0f172a" stroke-width="3" stroke-dasharray="4,4"/>
+    <path d="M 190 110 Q 195 140 180 145 Q 165 145 165 130" fill="none" stroke="#dc2626" stroke-width="4"/>
+    <polygon points="165,130 160,138 172,135" fill="#dc2626"/>
+
+    <!-- Fake Email Envelope Bait -->
+    <g transform="translate(175, 75)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="130" height="75" fill="#ffffff" stroke="#0f172a" stroke-width="3" rx="6"/>
+        <polyline points="0,0 65,45 130,0" fill="none" stroke="#0f172a" stroke-width="2.5"/>
+        <rect x="15" y="48" width="100" height="16" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="3"/>
+        <text x="20" y="60" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#dc2626">paypa1-update.xyz</text>
+    </g>
+
+    <!-- Shield Intercepting -->
+    <g transform="translate(50, 60)" filter="url(#comic-shadow)">
+        <path d="M 45 5 L 80 18 C 80 65 45 85 45 85 C 45 85 10 65 10 18 Z" fill="#0284c7" stroke="#0f172a" stroke-width="3"/>
+        <path d="M 45 12 L 72 23 C 72 60 45 76 45 76 C 45 76 18 60 18 23 Z" fill="#38bdf8"/>
+        <polyline points="32,45 42,55 58,35" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Comic Speech Bubble -->
+    <g transform="translate(240, 25)" filter="url(#comic-shadow)">
+        <path d="M 0 0 L 120 0 Q 130 0 130 10 L 130 35 Q 130 45 120 45 L 30 45 L 15 58 L 20 45 L 10 45 Q 0 45 0 35 Z" fill="#ffffff" stroke="#0f172a" stroke-width="2.5"/>
+        <text x="65" y="27" font-family="'Bangers', cursive" font-size="16" fill="#dc2626" text-anchor="middle" letter-spacing="1">FAKE LINK TRAP!</text>
+    </g>
+    
+    <text x="20" y="200" font-family="'Bangers', cursive" font-size="16" fill="#0f172a" letter-spacing="1">PHISHING &amp; SMISHING DEFENSE</text>
+</svg>

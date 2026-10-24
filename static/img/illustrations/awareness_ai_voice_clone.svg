@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+    
+    <defs>
+        <pattern id="halftone-dot" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0f172a" opacity="0.12"/>
+        </pattern>
+        <pattern id="halftone-red" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#dc2626" opacity="0.15"/>
+        </pattern>
+        <pattern id="halftone-blue" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0284c7" opacity="0.15"/>
+        </pattern>
+        <pattern id="hazard-stripe" width="20" height="20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#facc15" stroke-width="10" />
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#0f172a" stroke-width="10" />
+        </pattern>
+        <filter id="comic-shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#0f172a" flood-opacity="1"/>
+        </filter>
+    </defs>
+
+    <rect width="400" height="220" fill="#f8fafc" rx="10"/>
+    <rect width="400" height="220" fill="url(#halftone-dot)" rx="10"/>
+    <rect x="8" y="8" width="384" height="204" fill="none" stroke="#0f172a" stroke-width="3" rx="8"/>
+
+    <!-- AI Voice Waveform Display -->
+    <g transform="translate(40, 45)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="150" height="95" fill="#0f172a" stroke="#0f172a" stroke-width="3" rx="8"/>
+        <!-- Digital Voice Bars -->
+        <rect x="20" y="35" width="8" height="25" fill="#38bdf8" rx="2"/>
+        <rect x="35" y="20" width="8" height="55" fill="#38bdf8" rx="2"/>
+        <rect x="50" y="10" width="8" height="75" fill="#facc15" rx="2"/>
+        <rect x="65" y="25" width="8" height="45" fill="#38bdf8" rx="2"/>
+        <rect x="80" y="15" width="8" height="65" fill="#dc2626" rx="2"/>
+        <rect x="95" y="30" width="8" height="35" fill="#38bdf8" rx="2"/>
+        <rect x="110" y="40" width="8" height="15" fill="#38bdf8" rx="2"/>
+        <text x="75" y="88" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="#94a3b8" text-anchor="middle">AI VOICE CLONE: 98%</text>
+    </g>
+
+    <!-- Scammer Speech Bubble with cloned voice -->
+    <g transform="translate(210, 30)" filter="url(#comic-shadow)">
+        <path d="M 0 0 L 160 0 Q 170 0 170 10 L 170 45 Q 170 55 160 55 L 40 55 L 25 70 L 30 55 L 10 55 Q 0 55 0 45 Z" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+        <text x="85" y="24" font-family="'Bangers', cursive" font-size="14" fill="#dc2626" text-anchor="middle">"MOM! I'M ARRESTED!"</text>
+        <text x="85" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">(Cloned in 3 Seconds!)</text>
+    </g>
+
+    <!-- Detective Safe Word Countermeasure -->
+    <g transform="translate(210, 105)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="165" height="48" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" rx="8"/>
+        <text x="82" y="22" font-family="'Bangers', cursive" font-size="13" fill="#15803d" text-anchor="middle">HERO COUNTERMEASURE:</text>
+        <text x="82" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">Ask Secret "Family Safe Word"</text>
+    </g>
+    
+    <text x="25" y="198" font-family="'Bangers', cursive" font-size="15" fill="#0f172a">DEEPFAKE &amp; AI VOICE EMERGENCY DEFENSE</text>
+</svg>

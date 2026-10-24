@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%">
+    
+    <defs>
+        <pattern id="halftone-dot" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0f172a" opacity="0.12"/>
+        </pattern>
+        <pattern id="halftone-red" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#dc2626" opacity="0.15"/>
+        </pattern>
+        <pattern id="halftone-blue" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0284c7" opacity="0.15"/>
+        </pattern>
+        <pattern id="hazard-stripe" width="20" height="20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#facc15" stroke-width="10" />
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#0f172a" stroke-width="10" />
+        </pattern>
+        <filter id="comic-shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#0f172a" flood-opacity="1"/>
+        </filter>
+    </defs>
+
+    <circle cx="80" cy="80" r="75" fill="#fef08a" stroke="#0f172a" stroke-width="3.5"/>
+    <circle cx="80" cy="80" r="75" fill="url(#halftone-dot)"/>
+    
+    <!-- Head -->
+    <circle cx="80" cy="65" r="36" fill="#fed7aa" stroke="#0f172a" stroke-width="3"/>
+    <!-- Detective Beret / Hair -->
+    <path d="M 45 55 C 45 28 115 28 120 52 C 105 45 60 48 45 55 Z" fill="#1e293b" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="80" cy="28" r="4" fill="#dc2626"/>
+    
+    <!-- Cyber Visor / High-tech Glasses -->
+    <rect x="50" y="52" width="60" height="18" fill="#38bdf8" stroke="#0f172a" stroke-width="2.5" rx="4"/>
+    <line x1="50" y1="61" x2="110" y2="61" stroke="#ffffff" stroke-width="2"/>
+    <path d="M 72 82 Q 80 88 88 82" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Forensic Coat / Trench -->
+    <path d="M 38 150 C 38 115 60 102 80 102 C 100 102 122 115 122 150 Z" fill="#475569" stroke="#0f172a" stroke-width="3.5"/>
+    <polygon points="80,102 72,125 88,125" fill="#facc15" stroke="#0f172a" stroke-width="2"/>
+</svg>

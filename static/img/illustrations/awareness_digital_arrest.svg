@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+    
+    <defs>
+        <pattern id="halftone-dot" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0f172a" opacity="0.12"/>
+        </pattern>
+        <pattern id="halftone-red" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#dc2626" opacity="0.15"/>
+        </pattern>
+        <pattern id="halftone-blue" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0284c7" opacity="0.15"/>
+        </pattern>
+        <pattern id="hazard-stripe" width="20" height="20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#facc15" stroke-width="10" />
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#0f172a" stroke-width="10" />
+        </pattern>
+        <filter id="comic-shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#0f172a" flood-opacity="1"/>
+        </filter>
+    </defs>
+
+    <rect width="400" height="220" fill="#f8fafc" rx="10"/>
+    <rect width="400" height="220" fill="url(#halftone-red)" rx="10"/>
+    <rect x="8" y="8" width="384" height="204" fill="none" stroke="#0f172a" stroke-width="3" rx="8"/>
+
+    <!-- Video Call Window with Fake Cop -->
+    <g transform="translate(45, 25)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="190" height="135" fill="#ffffff" stroke="#0f172a" stroke-width="3" rx="8"/>
+        <!-- Window Bar -->
+        <rect x="0" y="0" width="190" height="22" fill="#1e293b" rx="6 6 0 0"/>
+        <circle cx="12" cy="11" r="4" fill="#ef4444"/>
+        <circle cx="24" cy="11" r="4" fill="#f59e0b"/>
+        <circle cx="36" cy="11" r="4" fill="#10b981"/>
+        <text x="110" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="bold" fill="#ffffff">Skype Video Call &bull; LIVE</text>
+        
+        <!-- Fake Cop in Uniform -->
+        <rect x="8" y="28" width="174" height="100" fill="#f1f5f9"/>
+        <circle cx="95" cy="65" r="22" fill="#f59e0b" stroke="#0f172a" stroke-width="2"/>
+        <rect x="75" y="50" width="40" height="12" fill="#1e293b" rx="3"/>
+        <path d="M 60 115 C 60 90 80 85 95 85 C 110 85 130 90 130 115" fill="#854d0e" stroke="#0f172a" stroke-width="2"/>
+        <polygon points="95,85 91,100 99,100" fill="#facc15"/>
+    </g>
+
+    <!-- Giant Rejection Stamp -->
+    <g transform="translate(210, 50) rotate(-6)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="165" height="75" fill="#fee2e2" stroke="#dc2626" stroke-width="3" stroke-dasharray="6,4" rx="8"/>
+        <text x="82" y="32" font-family="'Bangers', cursive" font-size="20" fill="#dc2626" text-anchor="middle" letter-spacing="1">100% FAKE!</text>
+        <text x="82" y="52" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="800" fill="#0f172a" text-anchor="middle">NO "DIGITAL ARREST"</text>
+        <text x="82" y="65" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" fill="#64748b" text-anchor="middle">Police Never Trial on Skype</text>
+    </g>
+    
+    <text x="25" y="198" font-family="'Bangers', cursive" font-size="15" fill="#0f172a">DIGITAL ARREST &amp; LAW ENFORCEMENT EXTORTION SCAMS</text>
+</svg>

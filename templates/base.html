@@ -86,24 +86,24 @@
                 </ul>
 
                 <div class="d-flex align-items-center gap-2">
-                    <a href="{{ url_for('chatbot') }}" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold">
-                        <i class="bi bi-robot me-1 text-primary"></i> AI Safety Bot
+                    <a href="{{ url_for('chatbot') }}" class="btn-comic-teal btn-comic-sm">
+                        <i class="bi bi-robot me-1"></i> AI SAFETY BOT
                     </a>
 
                     {% if session.get('admin_id') %}
                         <div class="dropdown">
-                            <button class="btn btn-dark btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-gear me-1"></i> Admin ({{ session.get('admin_username') }})
+                            <button class="btn-comic-dark btn-comic-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-gear me-1"></i> HQ ({{ session.get('admin_username') }})
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                                <li><a class="dropdown-item" href="{{ url_for('admin_dashboard') }}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-2 border-dark" style="border-radius: 10px;">
+                                <li><a class="dropdown-item fw-bold" href="{{ url_for('admin_dashboard') }}"><i class="bi bi-speedometer2 me-2 text-primary"></i> HQ Dashboard</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="{{ url_for('admin_logout') }}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                                <li><a class="dropdown-item text-danger fw-bold" href="{{ url_for('admin_logout') }}"><i class="bi bi-box-arrow-right me-2"></i> Terminate Session</a></li>
                             </ul>
                         </div>
                     {% else %}
-                        <a href="{{ url_for('admin_login') }}" class="btn btn-light btn-sm text-secondary border px-3 rounded-pill fw-medium">
-                            <i class="bi bi-lock me-1"></i> Admin Portal
+                        <a href="{{ url_for('admin_login') }}" class="btn-comic-outline btn-comic-sm">
+                            <i class="bi bi-shield-lock me-1"></i> ADMIN PORTAL
                         </a>
                     {% endif %}
                 </div>
@@ -116,9 +116,9 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
-                        <i class="bi {% if category == 'success' %}bi-check-circle-fill{% elif category == 'danger' %}bi-exclamation-octagon-fill{% else %}bi-info-circle-fill{% endif %} me-2"></i>
-                        {{ message }}
+                    <div class="alert alert-comic alert-comic-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="bi {% if category == 'success' %}bi-check-circle-fill text-success{% elif category == 'danger' %}bi-exclamation-octagon-fill text-danger{% else %}bi-info-circle-fill text-primary{% endif %} me-2 fs-5 align-middle"></i>
+                        <span class="align-middle">{{ message }}</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
@@ -132,59 +132,65 @@
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="border-top border-3 border-dark" style="background: var(--comic-ink);">
         <div class="container">
             <div class="row g-4 mb-4">
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        <div class="shield-icon" style="width: 28px; height: 28px; background: #0284c7; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; color: #fff;">
+                        <div class="shield-icon" style="width: 34px; height: 34px; background: var(--comic-yellow); border: 2px solid #ffffff; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: var(--comic-ink); font-size: 1.15rem; box-shadow: 2px 2px 0 #000;">
                             <i class="bi bi-shield-check"></i>
                         </div>
-                        <span class="fs-5 fw-bold text-white">CyberHelp</span>
+                        <span class="fs-4 fw-bold text-white font-comic" style="letter-spacing: 0.05em;">CYBERHELP HQ</span>
                     </div>
-                    <p class="small text-secondary mb-3">
-                        A community-driven cyber safety helpdesk empowering non-technical users, seniors, students, and small businesses with actionable digital defense knowledge and incident response guidance.
+                    <p class="small text-secondary mb-3 lh-base">
+                        Community-driven digital defense taskforce empowering citizens, seniors, and students with tactical playbooks, live phishing heuristic tools, and instant 1930 Golden Hour response guidance.
                     </p>
-                    <div class="d-flex gap-3 text-secondary">
-                        <span class="badge bg-secondary-subtle text-dark border">Powered by Flask</span>
-                        <span class="badge bg-secondary-subtle text-dark border">Indian Cybercrime 1930</span>
+                    <div class="d-flex flex-wrap gap-2 text-secondary">
+                        <span class="badge bg-dark border border-secondary text-warning font-comic letter-spacing-1">100% OPEN SOURCE</span>
+                        <span class="badge bg-dark border border-secondary text-info font-comic letter-spacing-1">MHA 1930 COMPLIANT</span>
                     </div>
                 </div>
 
                 <div class="col-6 col-lg-2">
-                    <h6 class="text-white fw-bold mb-3">Modules</h6>
+                    <h6 class="text-warning font-comic mb-3 text-uppercase" style="letter-spacing: 0.08em; font-size: 1.15rem;">Field Modules</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2">
-                        <li><a href="{{ url_for('awareness') }}">Awareness Hub</a></li>
-                        <li><a href="{{ url_for('scam_library') }}">Scam Library</a></li>
-                        <li><a href="{{ url_for('tools') }}">Password & URL Tools</a></li>
-                        <li><a href="{{ url_for('quiz') }}">Interactive Quiz</a></li>
+                        <li><a href="{{ url_for('awareness') }}" class="text-light text-decoration-none hover-yellow"><i class="bi bi-chevron-right text-warning small"></i> Awareness Hub</a></li>
+                        <li><a href="{{ url_for('scam_library') }}" class="text-light text-decoration-none hover-yellow"><i class="bi bi-chevron-right text-warning small"></i> Scam Archives</a></li>
+                        <li><a href="{{ url_for('tools') }}" class="text-light text-decoration-none hover-yellow"><i class="bi bi-chevron-right text-warning small"></i> Safety Tools</a></li>
+                        <li><a href="{{ url_for('quiz') }}" class="text-light text-decoration-none hover-yellow"><i class="bi bi-chevron-right text-warning small"></i> Scam Buster Challenge</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-lg-2">
-                    <h6 class="text-white fw-bold mb-3">Emergency</h6>
+                    <h6 class="text-danger font-comic mb-3 text-uppercase" style="letter-spacing: 0.08em; font-size: 1.15rem;">Emergency</h6>
                     <ul class="list-unstyled small d-flex flex-column gap-2">
-                        <li><a href="{{ url_for('reporting') }}">Helpline 1930 Guide</a></li>
-                        <li><a href="https://cybercrime.gov.in" target="_blank">cybercrime.gov.in</a></li>
-                        <li><a href="https://sachet.rbi.org.in" target="_blank">RBI Sachet Portal</a></li>
-                        <li><a href="https://sancharsaathi.gov.in" target="_blank">Chakshu Portal</a></li>
+                        <li><a href="{{ url_for('reporting') }}" class="text-light text-decoration-none hover-red"><i class="bi bi-telephone-fill text-danger small"></i> Helpline 1930 Guide</a></li>
+                        <li><a href="https://cybercrime.gov.in" target="_blank" class="text-light text-decoration-none"><i class="bi bi-box-arrow-up-right text-secondary small"></i> cybercrime.gov.in</a></li>
+                        <li><a href="https://sachet.rbi.org.in" target="_blank" class="text-light text-decoration-none"><i class="bi bi-box-arrow-up-right text-secondary small"></i> RBI Sachet Portal</a></li>
+                        <li><a href="https://sancharsaathi.gov.in" target="_blank" class="text-light text-decoration-none"><i class="bi bi-box-arrow-up-right text-secondary small"></i> Chakshu Portal</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-4">
-                    <h6 class="text-white fw-bold mb-3">AI Cyber Safety Assistant</h6>
-                    <p class="small text-secondary mb-3">
-                        Have an urgent question about a suspicious SMS, APK, or bank call? Ask our Gemini AI cyber safety assistant.
-                    </p>
-                    <a href="{{ url_for('chatbot') }}" class="btn btn-primary btn-sm rounded-pill px-3">
-                        <i class="bi bi-chat-dots-fill me-1"></i> Start Cyber Assistant
-                    </a>
+                    <div class="p-3 border border-2 border-secondary rounded-3" style="background: rgba(30, 41, 59, 0.7);">
+                        <h6 class="text-white font-comic mb-2 text-uppercase" style="letter-spacing: 0.05em; font-size: 1.15rem;">
+                            <i class="bi bi-robot text-info me-1"></i> AI CYBER DISPATCH
+                        </h6>
+                        <p class="small text-secondary mb-3">
+                            Encountered a suspicious OTP request, APK file, or bank threat? Transmit inquiry to our AI Cyber Safety Assistant.
+                        </p>
+                        <a href="{{ url_for('chatbot') }}" class="btn-comic-yellow btn-comic-sm">
+                            <i class="bi bi-chat-dots-fill me-1"></i> OPEN COMMS CONSOLE
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap justify-content-between align-items-center small text-secondary">
-                <div>&copy; 2026 CyberHelp Community Safety Helpdesk. All rights reserved.</div>
-                <div>Educational Platform &bull; Built with Python &amp; Flask</div>
+                <div>&copy; 2026 CyberHelp Community Digital Defense. Zero XAMPP &bull; Built with Python &amp; Flask.</div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-danger text-white font-comic"><i class="bi bi-telephone-fill me-1"></i> 1930 HELPLINE</span>
+                </div>
             </div>
         </div>
     </footer>

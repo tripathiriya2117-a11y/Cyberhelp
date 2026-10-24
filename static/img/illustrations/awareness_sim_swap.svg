@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+    
+    <defs>
+        <pattern id="halftone-dot" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0f172a" opacity="0.12"/>
+        </pattern>
+        <pattern id="halftone-red" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#dc2626" opacity="0.15"/>
+        </pattern>
+        <pattern id="halftone-blue" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0284c7" opacity="0.15"/>
+        </pattern>
+        <pattern id="hazard-stripe" width="20" height="20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#facc15" stroke-width="10" />
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#0f172a" stroke-width="10" />
+        </pattern>
+        <filter id="comic-shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#0f172a" flood-opacity="1"/>
+        </filter>
+    </defs>
+
+    <rect width="400" height="220" fill="#f8fafc" rx="10"/>
+    <rect width="400" height="220" fill="url(#halftone-blue)" rx="10"/>
+    <rect x="8" y="8" width="384" height="204" fill="none" stroke="#0f172a" stroke-width="3" rx="8"/>
+
+    <!-- Cellular Tower -->
+    <g transform="translate(40, 30)">
+        <line x1="40" y1="140" x2="60" y2="20" stroke="#0f172a" stroke-width="3"/>
+        <line x1="80" y1="140" x2="60" y2="20" stroke="#0f172a" stroke-width="3"/>
+        <line x1="45" y1="110" x2="75" y2="110" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="50" y1="75" x2="70" y2="75" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="55" y1="45" x2="65" y2="45" stroke="#0f172a" stroke-width="2"/>
+        <line x1="45" y1="140" x2="75" y2="110" stroke="#0f172a" stroke-width="1.5"/>
+        <line x1="75" y1="140" x2="45" y2="110" stroke="#0f172a" stroke-width="1.5"/>
+        <!-- Signal Waves Crossing out -->
+        <path d="M 60 10 A 15 15 0 0 1 80 20" fill="none" stroke="#dc2626" stroke-width="3"/>
+        <path d="M 60 0 A 25 25 0 0 1 95 20" fill="none" stroke="#dc2626" stroke-width="3"/>
+        <line x1="70" y1="0" x2="90" y2="25" stroke="#dc2626" stroke-width="3.5"/>
+    </g>
+
+    <!-- Victim Phone showing NO SERVICE -->
+    <g transform="translate(145, 35)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="95" height="145" fill="#ffffff" stroke="#0f172a" stroke-width="3" rx="12"/>
+        <rect x="8" y="16" width="79" height="110" fill="#f1f5f9" rx="4"/>
+        <!-- Red Alert Screen -->
+        <rect x="14" y="35" width="67" height="60" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="6"/>
+        <text x="47" y="55" font-family="'Bangers', cursive" font-size="14" fill="#dc2626" text-anchor="middle">NO SERVICE</text>
+        <path d="M 35 68 L 59 68" stroke="#dc2626" stroke-width="2.5"/>
+        <text x="47" y="82" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="bold" fill="#64748b" text-anchor="middle">SIGNAL CUT</text>
+    </g>
+
+    <!-- Swapped SIM Card in Fraudster Hand -->
+    <g transform="translate(265, 45)" filter="url(#comic-shadow)">
+        <!-- SIM Card Shape -->
+        <path d="M 15 0 L 75 0 L 95 20 L 95 120 L 15 120 Z" fill="#facc15" stroke="#0f172a" stroke-width="3"/>
+        <!-- Gold Chip -->
+        <rect x="35" y="45" width="40" height="40" fill="#fef08a" stroke="#ca8a04" stroke-width="2" rx="4"/>
+        <line x1="35" y1="65" x2="75" y2="65" stroke="#ca8a04" stroke-width="1.5"/>
+        <line x1="55" y1="45" x2="55" y2="85" stroke="#ca8a04" stroke-width="1.5"/>
+        <text x="55" y="105" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">4G / 5G</text>
+    </g>
+
+    <!-- Comic POW Burst -->
+    <g transform="translate(240, 20) rotate(10)" filter="url(#comic-shadow)">
+        <polygon points="40,5 55,20 75,10 70,30 90,40 70,50 80,70 60,65 50,85 40,65 20,70 30,50 10,40 30,30 25,10 45,20" fill="#dc2626" stroke="#0f172a" stroke-width="2"/>
+        <text x="50" y="48" font-family="'Bangers', cursive" font-size="13" fill="#ffffff" text-anchor="middle">SWAPPED!</text>
+    </g>
+    
+    <text x="25" y="198" font-family="'Bangers', cursive" font-size="15" fill="#0f172a">SIM SWAP &amp; SIGNAL HIJACKING DEFENSE</text>
+</svg>

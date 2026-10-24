@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+    
+    <defs>
+        <pattern id="halftone-dot" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0f172a" opacity="0.12"/>
+        </pattern>
+        <pattern id="halftone-red" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#dc2626" opacity="0.15"/>
+        </pattern>
+        <pattern id="halftone-blue" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="#0284c7" opacity="0.15"/>
+        </pattern>
+        <pattern id="hazard-stripe" width="20" height="20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="20" stroke="#facc15" stroke-width="10" />
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#0f172a" stroke-width="10" />
+        </pattern>
+        <filter id="comic-shadow" x="-5%" y="-5%" width="115%" height="115%">
+            <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#0f172a" flood-opacity="1"/>
+        </filter>
+    </defs>
+
+    <rect width="400" height="220" fill="#f8fafc" rx="10"/>
+    <rect width="400" height="220" fill="url(#halftone-red)" rx="10"/>
+    <rect x="8" y="8" width="384" height="204" fill="none" stroke="#0f172a" stroke-width="3" rx="8"/>
+
+    <!-- Smartphone Graphic -->
+    <g transform="translate(60, 25)" filter="url(#comic-shadow)">
+        <rect x="0" y="0" width="110" height="165" fill="#1e293b" stroke="#0f172a" stroke-width="3" rx="14"/>
+        <rect x="6" y="16" width="98" height="130" fill="#ffffff" rx="4"/>
+        <!-- SMS Bubble -->
+        <rect x="12" y="30" width="86" height="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" rx="5"/>
+        <text x="18" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="bold" fill="#0369a1">BANK ALERT:</text>
+        <text x="18" y="60" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800" fill="#dc2626">OTP: 739-204</text>
+        <text x="18" y="72" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" fill="#64748b">Never share with anyone.</text>
+        <circle cx="55" cy="154" r="5" fill="#475569"/>
+    </g>
+
+    <!-- Thief Hand / Impostor Calling -->
+    <g transform="translate(230, 35)">
+        <!-- Shadowy Caller Silhouette -->
+        <circle cx="90" cy="50" r="30" fill="#334155" stroke="#0f172a" stroke-width="3"/>
+        <path d="M 50 120 C 50 85 80 85 90 85 C 100 85 130 85 130 120" fill="#1e293b" stroke="#0f172a" stroke-width="3"/>
+        <rect x="75" y="40" width="40" height="8" fill="#111" rx="2" transform="rotate(-15 75 40)"/>
+        <!-- Dialogue Demand -->
+        <g transform="translate(-40, -10)" filter="url(#comic-shadow)">
+            <path d="M 0 0 L 130 0 Q 140 0 140 10 L 140 38 Q 140 48 130 48 L 70 48 L 60 58 L 65 48 L 10 48 Q 0 48 0 38 Z" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+            <text x="70" y="28" font-family="'Bangers', cursive" font-size="15" fill="#dc2626" text-anchor="middle">"READ ME YOUR OTP!"</text>
+        </g>
+    </g>
+
+    <!-- Giant Hero Padlock Slam -->
+    <g transform="translate(150, 75)" filter="url(#comic-shadow)">
+        <path d="M 20 35 L 20 20 C 20 8 45 8 45 20 L 45 35" fill="none" stroke="#facc15" stroke-width="7" stroke-linecap="round"/>
+        <rect x="5" y="32" width="55" height="50" fill="#dc2626" stroke="#0f172a" stroke-width="3" rx="8"/>
+        <circle cx="32" cy="52" r="6" fill="#facc15"/>
+        <polygon points="30,52 34,52 36,65 28,65" fill="#facc15"/>
+    </g>
+
+    <!-- Comic Action Stamp -->
+    <g transform="translate(180, 150) rotate(-4)">
+        <rect x="0" y="0" width="180" height="30" fill="#fef08a" stroke="#0f172a" stroke-width="2.5" rx="5" filter="url(#comic-shadow)"/>
+        <text x="90" y="21" font-family="'Bangers', cursive" font-size="15" fill="#0f172a" text-anchor="middle" letter-spacing="1">NO BANK ASKS FOR OTP!</text>
+    </g>
+</svg>

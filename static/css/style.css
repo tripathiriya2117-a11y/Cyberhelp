@@ -1,5 +1,5 @@
 /* CyberHelp - Community Cyber Safety Helpdesk Design System */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
     --brand-primary: #0284c7;
@@ -15,6 +15,26 @@
     --brand-success: #16a34a;
     --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --font-comic: 'Bangers', cursive, sans-serif;
+    --font-comic-alt: 'Comic Neue', cursive, sans-serif;
+
+    /* Comic Book Theme Tokens */
+    --comic-ink: #0f172a;
+    --comic-paper: #fffdf9;
+    --comic-yellow: #facc15;
+    --comic-yellow-soft: #fef08a;
+    --comic-red: #dc2626;
+    --comic-red-soft: #fee2e2;
+    --comic-blue: #0284c7;
+    --comic-blue-soft: #e0f2fe;
+    --comic-border: 2.5px solid #0f172a;
+    --comic-border-thick: 3.5px solid #0f172a;
+    --comic-shadow: 4px 4px 0 #0f172a;
+    --comic-shadow-sm: 2px 2px 0 #0f172a;
+    --comic-shadow-lg: 7px 7px 0 #0f172a;
+    --comic-shadow-danger: 6px 6px 0 #dc2626;
+    --comic-shadow-blue: 6px 6px 0 #0284c7;
+
     --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
     --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
     --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
@@ -41,61 +61,93 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 
 /* Emergency Helpline Alert Bar */
 .emergency-banner {
-    background: linear-gradient(90deg, #991b1b 0%, #b91c1c 100%);
+    background: #dc2626;
     color: #ffffff;
-    font-size: 0.92rem;
-    font-weight: 600;
-    padding: 0.55rem 1rem;
+    font-family: var(--font-comic-alt);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 2.5px solid var(--comic-ink);
 }
 .emergency-banner a {
     color: #fef08a;
     text-decoration: underline;
+    font-weight: 700;
+}
+.emergency-banner a:hover {
+    color: #ffffff;
 }
 .emergency-banner .badge-phone {
-    background-color: #ffffff;
-    color: #991b1b;
-    font-weight: 800;
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    letter-spacing: 0.05em;
+    background-color: var(--comic-yellow);
+    color: var(--comic-ink);
+    font-family: var(--font-comic);
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    border: 2px solid var(--comic-ink);
+    box-shadow: 2px 2px 0 var(--comic-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
 }
 
 /* Navbar */
 .navbar-custom {
     background: #ffffff;
-    border-bottom: 1px solid var(--brand-border);
-    padding: 0.85rem 0;
-    box-shadow: var(--shadow-sm);
+    border-bottom: 3px solid var(--comic-ink);
+    padding: 0.75rem 0;
+    box-shadow: 0 4px 0 rgba(15, 23, 42, 0.06);
 }
 .navbar-brand-logo {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--brand-dark);
+    gap: 0.65rem;
+    font-family: var(--font-comic);
+    font-size: 1.7rem;
+    letter-spacing: 0.04em;
+    color: var(--comic-ink);
+    text-decoration: none;
 }
 .navbar-brand-logo .shield-icon {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+    width: 36px;
+    height: 36px;
+    background: var(--comic-yellow);
+    border: 2.5px solid var(--comic-ink);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
-    font-size: 1.1rem;
+    color: var(--comic-ink);
+    font-size: 1.25rem;
+    box-shadow: 2px 2px 0 var(--comic-ink);
+    transition: transform 0.15s ease;
+}
+.navbar-brand-logo:hover .shield-icon {
+    transform: rotate(-6deg) scale(1.05);
 }
 .nav-link {
-    font-weight: 600;
-    color: #475569 !important;
-    padding: 0.5rem 0.9rem !important;
-    border-radius: 6px;
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    color: #334155 !important;
+    padding: 0.4rem 0.85rem !important;
+    border-radius: 8px;
+    border: 2px solid transparent;
     transition: all 0.15s ease-in-out;
 }
-.nav-link:hover, .nav-link.active {
-    color: var(--brand-primary) !important;
-    background-color: #f0f9ff;
+.nav-link:hover {
+    color: var(--comic-ink) !important;
+    background-color: #fef08a;
+    border-color: var(--comic-ink);
+    box-shadow: 2px 2px 0 var(--comic-ink);
+    transform: translate(-1px, -1px);
+}
+.nav-link.active {
+    color: #0369a1 !important;
+    background-color: #e0f2fe;
+    border-color: var(--comic-ink);
+    box-shadow: 2.5px 2.5px 0 var(--comic-ink);
 }
 
 /* Hero Section */
@@ -336,3 +388,1410 @@ footer a:hover {
     color: #ffffff;
     text-decoration: underline;
 }
+
+/* ==========================================================================
+   COMIC BOOK THEME DESIGN SYSTEM (Scam Case Files & FAQ Dialogue Panels)
+   ========================================================================== */
+
+/* Halftone Dot Patterns & Comic Textures */
+.comic-halftone-bg {
+    background-color: #f8fafc;
+    background-image: radial-gradient(#cbd5e1 1.7px, transparent 1.7px);
+    background-size: 16px 16px;
+}
+.comic-halftone-red {
+    background-color: #fff1f2;
+    background-image: radial-gradient(rgba(225, 29, 72, 0.18) 1.8px, transparent 1.8px);
+    background-size: 16px 16px;
+    border-bottom: 3.5px solid var(--comic-ink);
+}
+.comic-halftone-blue {
+    background-color: #f0f9ff;
+    background-image: radial-gradient(rgba(2, 132, 199, 0.18) 1.8px, transparent 1.8px);
+    background-size: 16px 16px;
+    border-bottom: 3.5px solid var(--comic-ink);
+}
+
+/* Comic Page Headers & Typography */
+.comic-title {
+    font-family: var(--font-comic);
+    font-size: 2.75rem;
+    letter-spacing: 0.04em;
+    color: var(--comic-ink);
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+.comic-title-red {
+    text-shadow: 3px 3px 0 var(--comic-yellow), 5px 5px 0 var(--comic-ink);
+}
+.comic-title-blue {
+    text-shadow: 3px 3px 0 #93c5fd, 5px 5px 0 var(--comic-ink);
+}
+.comic-subtitle {
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #334155;
+    line-height: 1.6;
+}
+
+/* Rubber Stamps & Action Badges */
+.comic-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-comic);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 6px;
+    border: 2px dashed #dc2626;
+    color: #dc2626;
+    background: rgba(254, 226, 226, 0.85);
+    transform: rotate(-2deg);
+    box-shadow: 2px 2px 0 rgba(220, 38, 38, 0.3);
+}
+.comic-stamp-yellow {
+    border-color: #ca8a04;
+    color: #854d0e;
+    background: #fef9c3;
+    transform: rotate(1.5deg);
+    box-shadow: 2px 2px 0 rgba(133, 77, 14, 0.3);
+}
+.comic-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-comic);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    padding: 0.35rem 0.85rem;
+    border: 2px solid var(--comic-ink);
+    border-radius: 8px;
+    box-shadow: 2.5px 2.5px 0 var(--comic-ink);
+    text-transform: uppercase;
+}
+
+/* Comic Search Box */
+.comic-search-wrapper {
+    position: relative;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.comic-search-wrapper:focus-within {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--comic-ink);
+}
+.comic-search-wrapper .form-control {
+    border: none;
+    box-shadow: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.65rem 1rem;
+    background: transparent;
+}
+.comic-search-wrapper .comic-search-btn {
+    border: none;
+    background: var(--comic-yellow);
+    border-left: 2px solid var(--comic-ink);
+    padding: 0.65rem 1.2rem;
+    font-family: var(--font-comic);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: var(--comic-ink);
+    transition: background 0.15s ease;
+}
+.comic-search-wrapper .comic-search-btn:hover {
+    background: #eab308;
+}
+
+/* Comic Filter Pills */
+.comic-filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-comic);
+    font-size: 0.98rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border: 2px solid var(--comic-ink);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--comic-ink);
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    text-decoration: none;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.comic-filter-pill:hover {
+    color: var(--comic-ink);
+    background: #fef08a;
+    transform: translate(-2px, -2px);
+    box-shadow: 4.5px 4.5px 0 var(--comic-ink);
+}
+.comic-filter-pill.active {
+    background: var(--comic-yellow);
+    color: var(--comic-ink);
+    box-shadow: 2px 2px 0 var(--comic-ink);
+    transform: translate(-1px, -1px);
+    border-width: 2.5px;
+}
+.comic-filter-pill .badge-count {
+    background: var(--comic-ink);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   SCAM LIBRARY: COMIC CASE FILES
+   ========================================================================== */
+
+.comic-case-file {
+    position: relative;
+    background: #ffffff;
+    border: 3px solid var(--comic-ink);
+    border-radius: 14px;
+    box-shadow: 5px 6px 0 var(--comic-ink);
+    padding: 1.6rem 1.4rem 1.3rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 14px;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.2s ease;
+}
+.comic-case-file:hover {
+    transform: translate(-3px, -5px) rotate(-0.5deg);
+    box-shadow: 8px 10px 0 var(--comic-red);
+}
+
+/* Folder Docket Tab */
+.case-folder-tab {
+    position: absolute;
+    top: -15px;
+    left: 18px;
+    background: var(--comic-yellow);
+    border: 2.5px solid var(--comic-ink);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 0.18rem 0.85rem;
+    font-family: var(--font-comic);
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    color: var(--comic-ink);
+    box-shadow: 2px -2px 0 var(--comic-ink);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    z-index: 2;
+    transition: background-color 0.2s ease;
+}
+.comic-case-file:hover .case-folder-tab {
+    background: #fde047;
+}
+
+/* Crime Tape Hazard Bar */
+.case-hazard-strip {
+    height: 6px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #facc15,
+        #facc15 8px,
+        #0f172a 8px,
+        #0f172a 16px
+    );
+    border-radius: 3px;
+    border: 1px solid var(--comic-ink);
+    margin-bottom: 0.9rem;
+}
+
+/* Case Category Badge */
+.case-category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-comic);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1.5px solid #ef4444;
+}
+
+/* Case Title */
+.case-title {
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: 1.22rem;
+    line-height: 1.35;
+    color: var(--comic-ink);
+    margin-bottom: 0.75rem;
+}
+
+/* Dossier Preview Box */
+.case-dossier-box {
+    background: #fafaf9;
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    position: relative;
+}
+.case-dossier-box::before {
+    content: "CASE DOSSIER EXCERPT";
+    position: absolute;
+    top: -9px;
+    right: 12px;
+    background: #ffffff;
+    padding: 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+}
+.case-snippet-text {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #475569;
+}
+
+/* Comic Action Buttons */
+.btn-comic-danger {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--comic-red);
+    color: #ffffff !important;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 8px;
+    padding: 0.42rem 1.1rem;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-comic-danger:hover {
+    background: #b91c1c;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--comic-ink);
+}
+.btn-comic-danger:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--comic-ink);
+}
+
+.btn-comic-primary {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--comic-blue);
+    color: #ffffff !important;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 8px;
+    padding: 0.42rem 1.1rem;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-comic-primary:hover {
+    background: #0369a1;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--comic-ink);
+}
+.btn-comic-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--comic-ink);
+}
+
+.btn-comic-yellow {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--comic-yellow);
+    color: var(--comic-ink) !important;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 8px;
+    padding: 0.42rem 1.1rem;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-comic-yellow:hover {
+    background: #eab308;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--comic-ink);
+}
+.btn-comic-yellow:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--comic-ink);
+}
+
+.btn-comic-teal {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #0d9488;
+    color: #ffffff !important;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 8px;
+    padding: 0.42rem 1.1rem;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-comic-teal:hover {
+    background: #0f766e;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--comic-ink);
+}
+.btn-comic-teal:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--comic-ink);
+}
+
+.btn-comic-dark {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--comic-ink);
+    color: #ffffff !important;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 8px;
+    padding: 0.42rem 1.1rem;
+    box-shadow: 3px 3px 0 #64748b;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-comic-dark:hover {
+    background: #1e293b;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 #64748b;
+}
+
+.btn-comic-outline {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #ffffff;
+    color: var(--comic-ink) !important;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 8px;
+    padding: 0.42rem 1.1rem;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.btn-comic-outline:hover {
+    background: #f8fafc;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--comic-ink);
+}
+
+.btn-comic-sm {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.75rem;
+    border-width: 2px;
+    box-shadow: 2px 2px 0 var(--comic-ink);
+}
+.btn-comic-lg {
+    font-size: 1.25rem;
+    padding: 0.65rem 1.5rem;
+    border-width: 3px;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+}
+
+.btn-comic-report {
+    font-family: var(--font-comic);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    color: #475569;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+.btn-comic-report:hover {
+    color: var(--comic-red);
+    background: #fee2e2;
+}
+
+/* Classified Case Modal */
+.comic-modal-content {
+    background: #fffdfa;
+    border: 3.5px solid var(--comic-ink);
+    border-radius: 16px;
+    box-shadow: 9px 10px 0 var(--comic-ink);
+    overflow: hidden;
+}
+.comic-modal-header {
+    background: #fee2e2;
+    border-bottom: 3px solid var(--comic-ink);
+    padding: 1.25rem 1.5rem;
+}
+.comic-modal-body {
+    padding: 1.5rem 1.6rem;
+}
+.comic-modal-footer {
+    background: #f8fafc;
+    border-top: 3px solid var(--comic-ink);
+    padding: 1rem 1.5rem;
+}
+
+.case-section-block {
+    background: #ffffff;
+    border: 2px solid var(--comic-ink);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1.15rem;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+}
+.case-section-header {
+    font-family: var(--font-comic);
+    font-size: 1.15rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+/* ==========================================================================
+   FAQ PAGE: COMIC DIALOGUE PANELS
+   ========================================================================== */
+
+.comic-dialogue-item {
+    background: #ffffff;
+    border: 3px solid var(--comic-ink);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--comic-ink);
+    margin-bottom: 1.4rem;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+.comic-dialogue-item:hover {
+    transform: translate(-2px, -3px);
+    box-shadow: 7px 7px 0 var(--comic-blue);
+}
+
+/* Citizen Speech Bubble Trigger */
+.comic-dialogue-trigger {
+    background: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 1.25rem 1.4rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.comic-dialogue-trigger:hover {
+    background: #f8fafc;
+}
+
+.citizen-speaker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-comic);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #fef08a;
+    color: var(--comic-ink);
+    border: 1.5px solid var(--comic-ink);
+    border-radius: 5px;
+    padding: 0.15rem 0.55rem;
+    box-shadow: 1.5px 1.5px 0 var(--comic-ink);
+    margin-bottom: 0.35rem;
+}
+
+.citizen-question-text {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 1.08rem;
+    line-height: 1.4;
+    color: var(--comic-ink);
+    margin: 0;
+}
+
+/* Interactive Action Intel Button / Pivot Chevron */
+.comic-intel-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-comic);
+    font-size: 0.92rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: #e0f2fe;
+    color: var(--comic-blue);
+    border: 2px solid var(--comic-ink);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--comic-ink);
+    padding: 0.32rem 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.comic-dialogue-trigger[aria-expanded="true"] .comic-intel-toggle {
+    background: var(--comic-blue);
+    color: #ffffff;
+    box-shadow: 1px 1px 0 var(--comic-ink);
+    transform: scale(0.97);
+}
+.comic-dialogue-trigger .toggle-chevron {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.comic-dialogue-trigger[aria-expanded="true"] .toggle-chevron {
+    transform: rotate(180deg);
+}
+
+/* Cyber-Defender Answer Speech Bubble */
+.comic-dialogue-response {
+    background: #f0f9ff;
+    border-top: 3px dashed var(--comic-blue);
+    padding: 1.5rem 1.6rem;
+    position: relative;
+    box-shadow: inset 0 3px 6px rgba(2, 132, 199, 0.06);
+}
+
+/* Speech Bubble Tail/Pointer */
+.dialogue-speech-pointer {
+    position: absolute;
+    top: -12px;
+    left: 40px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 12px solid var(--comic-blue);
+}
+
+.defender-intel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-comic);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--comic-blue);
+    color: #ffffff;
+    border: 2px solid var(--comic-ink);
+    border-radius: 6px;
+    padding: 0.25rem 0.8rem;
+    box-shadow: 2.5px 2.5px 0 var(--comic-ink);
+    margin-bottom: 0.9rem;
+}
+
+.defender-answer-text {
+    font-family: var(--font-main);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #1e293b;
+    white-space: pre-line;
+}
+
+/* Backup Call Card */
+.comic-backup-card {
+    background: #ffffff;
+    border: 3.5px solid var(--comic-ink);
+    border-radius: 16px;
+    box-shadow: 8px 8px 0 var(--comic-ink);
+    padding: 2.2rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+.comic-backup-badge {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-family: var(--font-comic);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    background: #fef08a;
+    border: 2px solid var(--comic-ink);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    transform: rotate(3deg);
+    box-shadow: 2px 2px 0 var(--comic-ink);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .comic-title {
+        font-size: 2.1rem;
+    }
+    .comic-dialogue-trigger {
+        padding: 1rem 1.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .comic-intel-toggle {
+        align-self: flex-start;
+    }
+    .case-folder-tab {
+        font-size: 0.78rem;
+        padding: 0.12rem 0.65rem;
+    }
+}
+
+/* ==========================================================================
+   AWARENESS HUB: COMIC CARDS & ILLUSTRATIONS
+   ========================================================================== */
+
+.comic-awareness-card {
+    background: #ffffff;
+    border: 3px solid var(--comic-ink);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--comic-ink);
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease;
+}
+.comic-awareness-card:hover {
+    transform: translate(-3px, -5px) rotate(-0.4deg);
+    box-shadow: 8px 9px 0 var(--comic-blue);
+}
+
+.awareness-thumb-frame {
+    background: #f1f5f9;
+    border-bottom: 2.5px solid var(--comic-ink);
+    position: relative;
+    overflow: hidden;
+    height: 165px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.awareness-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.comic-awareness-card:hover .awareness-thumb-img {
+    transform: scale(1.04);
+}
+
+.awareness-card-body {
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.awareness-modal-img-frame {
+    background: #f8fafc;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    margin-bottom: 1.25rem;
+    max-height: 240px;
+}
+.awareness-modal-img {
+    width: 100%;
+    height: 100%;
+    max-height: 240px;
+    object-fit: cover;
+}
+
+/* ==========================================================================
+   SCAM LIBRARY: COMIC CARD VISUALS & 4-PHASE INVESTIGATION SEQUENCE
+   ========================================================================== */
+
+.scam-thumb-frame {
+    background: #f8fafc;
+    border: 2px solid var(--comic-ink);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    margin-bottom: 0.9rem;
+    height: 145px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.scam-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+.comic-case-file:hover .scam-thumb-img {
+    transform: scale(1.03);
+}
+
+/* 4-Phase Sequence in Case File Modal */
+.scam-sequence-step {
+    background: #ffffff;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 3.5px 3.5px 0 var(--comic-ink);
+    position: relative;
+    transition: transform 0.15s ease;
+}
+.scam-sequence-step:hover {
+    transform: translateX(3px);
+}
+.scam-phase-badge {
+    font-family: var(--font-comic);
+    font-size: 0.92rem;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.65rem;
+    border: 1.5px solid var(--comic-ink);
+    border-radius: 5px;
+    box-shadow: 1.5px 1.5px 0 var(--comic-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.scam-phase-1 { background: #fee2e2; color: #991b1b; }
+.scam-phase-2 { background: #fef08a; color: #854d0e; }
+.scam-phase-3 { background: #dcfce7; color: #166534; }
+.scam-phase-4 { background: #e0f2fe; color: #0369a1; }
+
+/* ==========================================================================
+   QUIZ: "CYBER SQUAD: SCAM BUSTER CHALLENGE" (Interactive Mission Engine)
+   ========================================================================== */
+
+.quiz-mission-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Mission Control Bar */
+.quiz-mission-bar {
+    background: #ffffff;
+    border: 3px solid var(--comic-ink);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--comic-ink);
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.quiz-squad-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-comic);
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    color: var(--comic-ink);
+    text-transform: uppercase;
+}
+.quiz-live-score {
+    font-family: var(--font-comic);
+    font-size: 1.15rem;
+    letter-spacing: 0.05em;
+    background: #facc15;
+    color: var(--comic-ink);
+    border: 2px solid var(--comic-ink);
+    border-radius: 6px;
+    padding: 0.25rem 0.8rem;
+    box-shadow: 2px 2px 0 var(--comic-ink);
+}
+
+/* Comic Progress Bar */
+.quiz-progress-wrapper {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+.quiz-comic-progress-track {
+    height: 14px;
+    background: #e2e8f0;
+    border: 2px solid var(--comic-ink);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.quiz-comic-progress-fill {
+    height: 100%;
+    background: repeating-linear-gradient(
+        -45deg,
+        #0284c7,
+        #0284c7 10px,
+        #38bdf8 10px,
+        #38bdf8 20px
+    );
+    width: 10%;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Question Case Panel */
+.quiz-panel-card {
+    background: #ffffff;
+    border: 3.5px solid var(--comic-ink);
+    border-radius: 16px;
+    box-shadow: 7px 7px 0 var(--comic-ink);
+    padding: 2rem 2.2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+/* Character Guidance Dialogue */
+.quiz-character-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.4rem;
+}
+.quiz-character-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: 2.5px solid var(--comic-ink);
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    background: #fef08a;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.quiz-character-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.quiz-dialogue-balloon {
+    background: #f8fafc;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 12px;
+    padding: 0.85rem 1.15rem;
+    position: relative;
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    flex-grow: 1;
+}
+.quiz-dialogue-balloon::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 18px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 12px solid var(--comic-ink);
+}
+.quiz-dialogue-balloon::after {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 19px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 10px solid #f8fafc;
+}
+.character-speaker-name {
+    font-family: var(--font-comic);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    color: var(--comic-blue);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+.character-clue-text {
+    font-family: var(--font-main);
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: #334155;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Question Title */
+.quiz-question-heading {
+    font-family: var(--font-main);
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: var(--comic-ink);
+    line-height: 1.45;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 2px dashed #cbd5e1;
+}
+
+/* Interactive Choices Grid */
+.quiz-choices-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-choice-card {
+    background: #ffffff;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 3.5px 3.5px 0 var(--comic-ink);
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+    outline: none;
+}
+.quiz-choice-card:hover:not(.locked) {
+    transform: translate(-2px, -3px);
+    box-shadow: 5.5px 5.5px 0 var(--comic-blue);
+    background: #f0f9ff;
+}
+.quiz-choice-card:focus-visible {
+    box-shadow: 0 0 0 4px #0284c7, 4px 4px 0 var(--comic-ink);
+}
+
+.choice-letter-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 2px solid var(--comic-ink);
+    background: #f1f5f9;
+    font-family: var(--font-comic);
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--comic-ink);
+    box-shadow: 1.5px 1.5px 0 var(--comic-ink);
+    transition: all 0.15s ease;
+}
+.choice-text-content {
+    font-family: var(--font-main);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.45;
+    flex-grow: 1;
+}
+
+/* Answer Selected & Correct/Incorrect States */
+.quiz-choice-card.selected {
+    background: #fef08a;
+    border-color: var(--comic-ink);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--comic-ink);
+}
+.quiz-choice-card.selected .choice-letter-badge {
+    background: #facc15;
+}
+
+.quiz-choice-card.correct-ans {
+    background: #dcfce7 !important;
+    border-color: #15803d !important;
+    color: #14532d !important;
+    box-shadow: 4px 4px 0 #15803d !important;
+    animation: pulseCorrect 0.4s ease;
+}
+.quiz-choice-card.correct-ans .choice-letter-badge {
+    background: #22c55e !important;
+    color: #ffffff !important;
+    border-color: #15803d !important;
+}
+
+.quiz-choice-card.wrong-ans {
+    background: #fee2e2 !important;
+    border-color: #b91c1c !important;
+    color: #7f1d1d !important;
+    box-shadow: 4px 4px 0 #b91c1c !important;
+    animation: comicShake 0.4s ease;
+}
+.quiz-choice-card.wrong-ans .choice-letter-badge {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    border-color: #b91c1c !important;
+}
+
+/* Immediate Educational Feedback Banner */
+.quiz-feedback-banner {
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    animation: comicPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.feedback-success {
+    background: #dcfce7;
+    border-color: #16a34a;
+}
+.feedback-danger {
+    background: #fee2e2;
+    border-color: #dc2626;
+}
+.feedback-badge {
+    font-family: var(--font-comic);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.6rem;
+    border: 2px solid var(--comic-ink);
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 2px 2px 0 var(--comic-ink);
+}
+
+/* Next Question Action Bar */
+.quiz-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* Victory / Results Screen */
+.quiz-victory-card {
+    background: #ffffff;
+    border: 3.5px solid var(--comic-ink);
+    border-radius: 20px;
+    box-shadow: 9px 9px 0 var(--comic-ink);
+    padding: 2.5rem 2.2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.quiz-rank-banner {
+    background: #facc15;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    display: inline-block;
+    font-family: var(--font-comic);
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    color: var(--comic-ink);
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    margin-bottom: 1rem;
+}
+.quiz-score-meter {
+    font-family: var(--font-comic);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--comic-ink);
+    margin-bottom: 0.5rem;
+    text-shadow: 3px 3px 0 var(--comic-yellow);
+}
+
+/* Keyframe Animations */
+@keyframes comicPop {
+    0% { transform: scale(0.95); opacity: 0; }
+    70% { transform: scale(1.02); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes comicShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+
+@keyframes pulseCorrect {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   SHARED COMIC SYSTEM: CARDS, STATS, FORMS, TABLES, CHAT & ACCESSIBILITY
+   ========================================================================== */
+
+/* Flash Alerts */
+.alert-comic {
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    font-family: var(--font-comic-alt);
+    font-weight: 700;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+.alert-comic-success { background: #dcfce7; color: #14532d; border-color: var(--comic-ink); }
+.alert-comic-danger { background: #fee2e2; color: #7f1d1d; border-color: var(--comic-ink); }
+.alert-comic-warning { background: #fef9c3; color: #713f12; border-color: var(--comic-ink); }
+.alert-comic-info { background: #e0f2fe; color: #0c4a6e; border-color: var(--comic-ink); }
+
+/* Comic Card Shared */
+.comic-card {
+    background: #ffffff;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.comic-card:hover {
+    transform: translate(-2px, -3px);
+    box-shadow: 6px 7px 0 var(--comic-ink);
+}
+
+/* Comic Stat Box */
+.comic-stat-card {
+    background: #ffffff;
+    border: 2.5px solid var(--comic-ink);
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    box-shadow: 4px 4px 0 var(--comic-ink);
+    text-align: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    height: 100%;
+}
+.comic-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 5.5px 5.5px 0 var(--comic-ink);
+}
+.comic-stat-number {
+    font-family: var(--font-comic);
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.35rem;
+}
+.comic-stat-label {
+    font-family: var(--font-comic);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+/* Comic Form Controls */
+.comic-form-control {
+    border: 2.5px solid var(--comic-ink) !important;
+    border-radius: 10px !important;
+    font-family: var(--font-main);
+    font-weight: 600;
+    padding: 0.65rem 0.95rem;
+    box-shadow: 2.5px 2.5px 0 var(--comic-ink);
+    transition: all 0.15s ease;
+    background-color: #ffffff;
+}
+.comic-form-control:focus {
+    border-color: var(--comic-blue) !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25), 3.5px 3.5px 0 var(--comic-ink) !important;
+    outline: none;
+}
+.comic-form-label {
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    color: var(--comic-ink);
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+}
+
+/* Comic Table Component */
+.comic-table-frame {
+    border: 3px solid var(--comic-ink);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--comic-ink);
+    overflow: hidden;
+    background: #ffffff;
+}
+.comic-table {
+    margin-bottom: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+.comic-table th {
+    background: var(--comic-ink);
+    color: #ffffff;
+    font-family: var(--font-comic);
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.85rem 1rem;
+    border: none;
+    vertical-align: middle;
+}
+.comic-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1.5px solid #cbd5e1;
+    font-weight: 500;
+    vertical-align: middle;
+}
+.comic-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.comic-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Comic Emergency Action Panel (Homepage & Reporting) */
+.comic-emergency-box {
+    background: #ffffff;
+    border: 3px solid var(--comic-ink);
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 var(--comic-red);
+    overflow: hidden;
+    position: relative;
+}
+.comic-emergency-header {
+    background: #dc2626;
+    color: #ffffff;
+    border-bottom: 2.5px solid var(--comic-ink);
+    padding: 0.85rem 1.25rem;
+    font-family: var(--font-comic);
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Comic Chat Console */
+.comic-chat-window {
+    background: #ffffff;
+    border: 3.5px solid var(--comic-ink);
+    border-radius: 16px;
+    box-shadow: 7px 7px 0 var(--comic-ink);
+    display: flex;
+    flex-direction: column;
+    height: 620px;
+    overflow: hidden;
+}
+.comic-chat-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 3px solid var(--comic-ink);
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.comic-chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.comic-chat-bubble {
+    max-width: 82%;
+    padding: 1rem 1.3rem;
+    border-radius: 14px;
+    border: 2.5px solid var(--comic-ink);
+    box-shadow: 3px 3px 0 var(--comic-ink);
+    font-family: var(--font-comic-alt);
+    font-size: 1rem;
+    line-height: 1.55;
+    position: relative;
+}
+.comic-chat-bubble.bot {
+    align-self: flex-start;
+    background: #ffffff;
+    color: var(--comic-ink);
+    border-bottom-left-radius: 4px;
+}
+.comic-chat-bubble.user {
+    align-self: flex-end;
+    background: #fef08a;
+    color: var(--comic-ink);
+    border-bottom-right-radius: 4px;
+}
+.comic-chat-chip {
+    font-family: var(--font-comic);
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+    border: 2px solid var(--comic-ink);
+    border-radius: 9999px;
+    padding: 0.3rem 0.8rem;
+    background: #ffffff;
+    color: var(--comic-ink);
+    box-shadow: 2px 2px 0 var(--comic-ink);
+    transition: all 0.15s ease;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.comic-chat-chip:hover {
+    background: #fef08a;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--comic-ink);
+}
+
+/* Accessible Reduced-Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+    }
+}
+
+
+
