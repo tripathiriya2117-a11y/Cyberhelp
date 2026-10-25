@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+
+{% block title %}COMIC CASE FILE #{{ "%03d"|format(scam['scam_id']) }} - {{ scam['title'] }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .comic-reader {
+        background: radial-gradient(circle at top, #fffdf9 0%, #f8fafc 100%);
+    }
+    .comic-cover {
+        background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%);
+        border-bottom: 4px solid var(--comic-ink);
+        position: relative;
+        overflow: hidden;
+    }
+    .comic-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+        background-size: 10px 10px;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+    .comic-cover-inner {
+        position: relative;
+        z-index: 1;
+    }
+    .comic-panels {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 2rem 1rem 3rem;
+    }
+    .comic-panel {
+        background: #ffffff;
+        border: 3.5px solid var(--comic-ink);
+        border-radius: 14px;
+        box-shadow: 8px 8px 0 var(--comic-ink);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s ease;
+    }
+    .comic-panel:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 10px 10px 0 var(--comic-ink);
+    }
+    .comic-panel-header {
+        background: repeating-linear-gradient(-45deg, var(--comic-yellow), var(--comic-yellow) 12px, #fef08a 12px, #fef08a 24px);
+        border-bottom: 3px solid var(--comic-ink);
+        padding: 0.6rem 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .comic-panel-body {
+        padding: 1.6rem 1.8rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.6rem;
+        align-items: start;
+    }
+    .comic-scene {
+        position: relative;
+        min-height: 220px;
+        border: 2.5px solid var(--comic-ink);
+        border-radius: 12px;
+        background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        box-shadow: 4px 4px 0 var(--comic-ink);
+        overflow: hidden;
+    }
+    .comic-scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+        background-size: 8px 8px;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+    .comic-scene-content {
+        position: relative;
+        z-index: 1;
+        padding: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .phone-mock {
+        width: 150px;
+        margin: 0 auto;
+        background: #0f172a;
+        border-radius: 16px;
+        border: 3px solid #000;
+        box-shadow: 4px 4px 0 var(--comic-ink);
+        overflow: hidden;
+    }
+    .phone-screen {
+        background: #e5f2ff;
+        padding: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-height: 150px;
+    }
+    .phone-header {
+        background: #22d3ee;
+        color: #0f172a;
+        font-family: var(--font-comic);
+        text-align: center;
+        padding: 0.25rem;
+        border-radius: 6px;
+    }
+    .msg-bubble {
+        align-self: flex-start;
+        background: #ffffff;
+        border: 2px solid var(--comic-ink);
+        border-radius: 10px 10px 10px 4px;
+        padding: 0.4rem 0.6rem;
+        max-width: 90%;
+        font-size: 0.85rem;
+        box-shadow: 2px 2px 0 var(--comic-ink);
+        position: relative;
+    }
+    .msg-bubble.alert {
+        background: #fee2e2;
+        align-self: flex-end;
+        border-radius: 10px 10px 4px 10px;
+    }
+    .character-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.8rem;
+    }
+    .silhouette {
+        width: 70px;
+        height: 90px;
+        background: radial-gradient(circle at 50% 25%, #fcd34d 0%, #f59e0b 60%);
+        border: 2.5px solid var(--comic-ink);
+        border-radius: 40% 40% 45% 45%;
+        box-shadow: 3px 3px 0 var(--comic-ink);
+        position: relative;
+    }
+    .silhouette.villain {
+        background: radial-gradient(circle at 50% 25%, #fca5a5 0%, #dc2626 65%);
+    }
+    .silhouette::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 10%;
+        width: 80%;
+        height: 16px;
+        background: #0f172a;
+        border-radius: 50%;
+        opacity: 0.2;
+    }
+    .speech-bubble {
+        background: #ffffff;
+        border: 2.5px solid var(--comic-ink);
+        border-radius: 14px;
+        padding: 0.8rem 1rem;
+        box-shadow: 3px 3px 0 var(--comic-ink);
+        position: relative;
+        flex: 1;
+    }
+    .speech-bubble::before {
+        content: "";
+        position: absolute;
+        left: -14px;
+        bottom: 16px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 14px solid var(--comic-ink);
+    }
+    .speech-bubble::after {
+        content: "";
+        position: absolute;
+        left: -10px;
+        bottom: 17px;
+        width: 0;
+        height: 0;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        border-right: 12px solid #ffffff;
+    }
+    .speech-bubble.villain {
+        background: #fee2e2;
+    }
+    .speech-bubble.villain::after {
+        border-right-color: #fee2e2;
+    }
+    .narration-box {
+        background: #fff7ed;
+        border: 2.5px solid var(--comic-ink);
+        border-radius: 12px;
+        padding: 1rem 1.2rem;
+        box-shadow: 4px 4px 0 var(--comic-ink);
+        font-family: var(--font-comic-alt);
+        font-weight: 700;
+        line-height: 1.7;
+    }
+    .red-flag-callout {
+        background: #fef2f2;
+        border: 3px dashed var(--comic-red);
+        border-radius: 12px;
+        padding: 1rem 1.2rem;
+        box-shadow: 4px 4px 0 rgba(220, 38, 38, 0.4);
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    .safety-guide {
+        background: linear-gradient(180deg, #f0fdf4 0%, #ecfeff 100%);
+        border: 3.5px solid var(--comic-ink);
+        border-radius: 14px;
+        box-shadow: 8px 8px 0 var(--comic-ink);
+        overflow: hidden;
+    }
+    .safety-guide-header {
+        background: repeating-linear-gradient(-45deg, #86efac, #86efac 12px, #bbf7d0 12px, #bbf7d0 24px);
+        border-bottom: 3px solid var(--comic-ink);
+        padding: 0.7rem 1.4rem;
+    }
+    .safety-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        padding: 1.4rem;
+    }
+    .safety-card {
+        background: #ffffff;
+        border: 2.5px solid var(--comic-ink);
+        border-radius: 12px;
+        padding: 1rem 1.1rem;
+        box-shadow: 3px 3px 0 var(--comic-ink);
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    @media (max-width: 768px) {
+        .comic-panel-body {
+            grid-template-columns: 1fr;
+        }
+        .comic-panels {
+            padding: 1.2rem 0.8rem 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="comic-reader">
+    <!-- Comic Cover/Header -->
+    <section class="comic-cover py-5">
+        <div class="container comic-cover-inner">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                        <span class="comic-stamp"><i class="bi bi-shield-slash-fill"></i> GRAPHIC NOVEL CASE FILE</span>
+                        <span class="comic-stamp comic-stamp-yellow"><i class="bi bi-folder-fill"></i> FILE #{{ "%03d"|format(scam['scam_id']) }}</span>
+                        <span class="badge bg-danger text-white text-uppercase" style="font-family: var(--font-comic); letter-spacing: 0.05em;">{{ scam['category'] }}</span>
+                    </div>
+                    <h1 class="comic-title comic-title-red mb-2" style="font-size: clamp(2.2rem, 6vw, 4rem);">TELEGRAM TASK TRAP</h1>
+                    <h2 class="h3 fw-bold mb-3" style="font-family: var(--font-comic-alt);">{{ scam['title'] }}</h2>
+                    <p class="lead mb-4" style="font-family: var(--font-comic-alt); font-weight: 700;">
+                        A vertically scrolling comic explaining how easy money turns into a costly investment scam.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ url_for('scam_library') }}" class="btn-comic-outline">
+                            <i class="bi bi-arrow-left"></i> Back to Case Files
+                        </a>
+                        <a href="{{ url_for('reporting') }}" class="btn-comic-danger">
+                            <i class="bi bi-megaphone-fill"></i> Report & Get Help
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="comic-scene" style="min-height: 260px;">
+                        <div class="comic-scene-content align-items-center justify-content-center text-center">
+                            <img src="{{ url_for('static', filename='img/illustrations/scam_telegram_job.svg') }}" alt="Telegram Task Scam Illustration" style="max-width: 100%; max-height: 200px; filter: drop-shadow(4px 4px 0 rgba(15,23,42,0.8));">
+                            <div class="comic-stamp mt-2"><i class="bi bi-exclamation-triangle-fill text-danger"></i> EASY MONEY = DANGER</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vertically Scrolling Comic Panels -->
+    <section class="comic-panels">
+        <!-- Panel 1: Setup -->
+        <article class="comic-panel">
+            <header class="comic-panel-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="comic-stamp"><i class="bi bi-1-circle-fill"></i> PANEL 1</span>
+                    <span class="fw-bold" style="font-family: var(--font-comic); letter-spacing: 0.05em;">SETUP: THE BAIT</span>
+                </div>
+                <span class="comic-stamp comic-stamp-yellow">SCENE: WHATSAPP MESSAGE</span>
+            </header>
+            <div class="comic-panel-body">
+                <div class="comic-scene">
+                    <div class="comic-scene-content">
+                        <div class="phone-mock">
+                            <div class="phone-screen">
+                                <div class="phone-header">UNKNOWNSENDER</div>
+                                <div class="msg-bubble">Hey! Earn ₹150-₹500 daily by liking YouTube videos & writing reviews.</div>
+                                <div class="msg-bubble alert">No experience needed. Instant payout!</div>
+                                <div class="msg-bubble">Want to join the group?</div>
+                            </div>
+                        </div>
+                        <div class="text-center small fw-bold" style="font-family: var(--font-comic-alt);">UNSOLICITED "EASY MONEY" MESSAGE</div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column gap-3">
+                    <div class="character-row">
+                        <div class="silhouette"></div>
+                        <div class="speech-bubble">
+                            <strong>VICTIM (Rahul):</strong> "Extra income sounds perfect. Let me check this out..."
+                        </div>
+                    </div>
+                    <div class="narration-box">
+                        <i class="bi bi-book-half me-2"></i>
+                        Scammers reach out with attractive offers on WhatsApp - liking videos, hotel reviews, or simple tasks for quick cash.
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Panel 2: Scammer's Trick -->
+        <article class="comic-panel">
+            <header class="comic-panel-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="comic-stamp"><i class="bi bi-2-circle-fill"></i> PANEL 2</span>
+                    <span class="fw-bold" style="font-family: var(--font-comic); letter-spacing: 0.05em;">TRICK: TRUST BUILDING</span>
+                </div>
+                <span class="comic-stamp comic-stamp-yellow">SCENE: TELEGRAM VIP GROUP</span>
+            </header>
+            <div class="comic-panel-body">
+                <div class="comic-scene">
+                    <div class="comic-scene-content">
+                        <div class="phone-mock">
+                            <div class="phone-screen">
+                                <div class="phone-header" style="background: #38bdf8;">VIP PREPAID TASKS</div>
+                                <div class="msg-bubble">Complete 3 tasks → Get ₹450 credited</div>
+                                <div class="msg-bubble alert">VIP LEVEL 5: DEPOSIT ₹50,000 TO UNLOCK EARNINGS</div>
+                                <div class="msg-bubble">Once deposited, you can withdraw ALL + commissions</div>
+                            </div>
+                        </div>
+                        <div class="text-center small fw-bold" style="font-family: var(--font-comic-alt);">THE PUSH TO DEPOSIT</div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column gap-3">
+                    <div class="character-row">
+                        <div class="silhouette villain"></div>
+                        <div class="speech-bubble villain">
+                            <strong>SCAMMER:</strong> "You've earned trust! To unlock your full balance, you must deposit a small amount into our merchant portal."
+                        </div>
+                    </div>
+                    <div class="narration-box">
+                        <i class="bi bi-diagram-3 me-2"></i>
+                        After small payouts build confidence, victims are moved to private Telegram groups and pressured to deposit larger amounts into fake portals.
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Panel 3: Victim Notices Warning Signs -->
+        <article class="comic-panel">
+            <header class="comic-panel-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="comic-stamp"><i class="bi bi-3-circle-fill"></i> PANEL 3</span>
+                    <span class="fw-bold" style="font-family: var(--font-comic); letter-spacing: 0.05em;">REALIZATION: RED FLAGS</span>
+                </div>
+                <span class="comic-stamp comic-stamp-yellow">SCENE: DOUBT KICKS IN</span>
+            </header>
+            <div class="comic-panel-body">
+                <div class="d-flex flex-column gap-3">
+                    <div class="red-flag-callout">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-exclamation-octagon-fill text-danger fs-4"></i>
+                            <span class="fw-bold" style="font-family: var(--font-comic); letter-spacing: 0.05em;">SPOTTED RED FLAGS</span>
+                        </div>
+                        <ul class="mb-0 d-flex flex-column gap-2">
+                            <li><strong>Easy money:</strong> Unrealistic daily payouts for simple clicks.</li>
+                            <li><strong>Off-platform move:</strong> Shifted to private Telegram/VIP group.</li>
+                            <li><strong>Pay to earn:</strong> Asked to deposit money to "unlock" earnings.</li>
+                            <li><strong>Escalation:</strong> Demands grow from ₹50k to lakhs.</li>
+                        </ul>
+                    </div>
+                    <div class="character-row">
+                        <div class="silhouette"></div>
+                        <div class="speech-bubble">
+                            <strong>VICTIM:</strong> "Wait... why do I need to PAY to get MY money? This doesn't feel right!"
+                        </div>
+                    </div>
+                </div>
+                <div class="comic-scene">
+                    <div class="comic-scene-content align-items-center justify-content-center text-center">
+                        <i class="bi bi-lightbulb-fill text-warning" style="font-size: 4rem; filter: drop-shadow(3px 3px 0 var(--comic-ink));"></i>
+                        <div class="narration-box mt-2">THE CRUCIAL MOMENT - TRUST YOUR GUT!</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Panel 4: Safe Response -->
+        <article class="comic-panel">
+            <header class="comic-panel-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="comic-stamp"><i class="bi bi-4-circle-fill"></i> PANEL 4</span>
+                    <span class="fw-bold" style="font-family: var(--font-comic); letter-spacing: 0.05em;">RESPONSE: STOP & ACT</span>
+                </div>
+                <span class="comic-stamp comic-stamp-yellow">SCENE: SMART CHOICES</span>
+            </header>
+            <div class="comic-panel-body">
+                <div class="comic-scene">
+                    <div class="comic-scene-content align-items-center justify-content-center text-center">
+                        <div class="d-flex gap-3">
+                            <div class="silhouette" style="background: radial-gradient(circle at 50% 25%, #86efac 0%, #22c55e 65%);"></div>
+                            <i class="bi bi-shield-shaded text-success" style="font-size: 4rem; filter: drop-shadow(3px 3px 0 var(--comic-ink));"></i>
+                        </div>
+                        <div class="narration-box mt-2">STOP. BLOCK. REPORT.</div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column gap-3">
+                    <div class="character-row">
+                        <div class="silhouette"></div>
+                        <div class="speech-bubble">
+                            <strong>VICTIM:</strong> "I'm not sending any more money. I'm blocking and reporting this right now!"
+                        </div>
+                    </div>
+                    <div class="narration-box">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Never pay to earn. Exit the group, block the numbers, preserve screenshots, and report immediately.
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- Final Practical Safety Guide and Reporting Guidance -->
+    <section class="container pb-5">
+        <div class="safety-guide">
+            <header class="safety-guide-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="comic-stamp"><i class="bi bi-shield-fill-check"></i> SAFETY PLAYBOOK</span>
+                        <h3 class="mb-0" style="font-family: var(--font-comic); letter-spacing: 0.05em;">FINAL PRACTICAL SAFETY GUIDE & REPORTING</h3>
+                    </div>
+                    <span class="comic-stamp comic-stamp-yellow"><i class="bi bi-alarm-fill"></i> GOLDEN HOUR MATTERS</span>
+                </div>
+            </header>
+            <div class="safety-grid">
+                <article class="safety-card">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-x-circle-fill text-danger fs-4"></i>
+                        <strong style="font-family: var(--font-comic);">DO NOT</strong>
+                    </div>
+                    <ul class="mb-0">
+                        <li>Pay registration/deposit fees to get a job</li>
+                        <li>Move conversations to private Telegram groups</li>
+                        <li>Share UPI PINs, OTPs, or banking details</li>
+                        <li>Install unknown remote access apps</li>
+                    </ul>
+                </article>
+                <article class="safety-card">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                        <strong style="font-family: var(--font-comic);">DO</strong>
+                    </div>
+                    <ul class="mb-0">
+                        <li>Verify jobs only via official company portals</li>
+                        <li>Screenshot messages, numbers, UPI IDs, links</li>
+                        <li>Block and report suspicious contacts</li>
+                        <li>Talk to trusted family/friends before paying</li>
+                    </ul>
+                </article>
+                <article class="safety-card">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-telephone-inbound-fill text-primary fs-4"></i>
+                        <strong style="font-family: var(--font-comic);">REPORT IMMEDIATELY</strong>
+                    </div>
+                    <p class="mb-2">Call <strong>1930</strong> (National Cyber Crime Helpline) within 1-2 hours for financial fraud.</p>
+                    <p class="mb-0">File at <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="fw-bold">cybercrime.gov.in</a></p>
+                </article>
+                <article class="safety-card">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-shield-lock-fill text-warning fs-4"></i>
+                        <strong style="font-family: var(--font-comic);">REMEMBER</strong>
+                    </div>
+                    <p class="mb-0"><strong>Golden Rule:</strong> Legitimate employers never ask you to pay to get paid.</p>
+                </article>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center gap-2 p-3 border-top border-3 border-dark">
+                <a href="{{ url_for('scam_library') }}" class="btn-comic-outline">
+                    <i class="bi bi-folder-symlink"></i> Back to All Case Files
+                </a>
+                <a href="{{ url_for('reporting') }}" class="btn-comic-danger">
+                    <i class="bi bi-megaphone-fill"></i> Go to Cyber Reporting
+                </a>
+                <a href="{{ url_for('quiz') }}" class="btn-comic-teal">
+                    <i class="bi bi-patch-question-fill"></i> Test Your Knowledge
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
